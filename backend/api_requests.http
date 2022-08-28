@@ -1,0 +1,90 @@
+POST http://localhost:8003/api/v1/posts/2
+Content-Type: application/json
+Accept: application/json
+
+{
+    "_method": "DELETE"
+}
+
+###
+PUT http://localhost:8003/api/v1/posts/2
+Content-Type: application/json
+Accept: application/json
+
+{
+
+    "title": "222Обновили",
+    "category_id": 2
+}
+
+###
+POST http://localhost:8003/api/v1/posts
+Accept: application/json
+Content-Type: application/json
+
+{
+    "title": "Новый thth",
+    "category_id": 2
+}
+
+
+###
+### все
+GET http://localhost:8003/api/v1/posts
+Accept: application/json
+
+### последний
+GET http://localhost:8003/api/v1/posts/2
+Accept: application/json
+
+###
+GET http://localhost:8003/api/v1/posts/1/categories
+Accept: application/json
+
+###
+
+
+###
+### вsanctum
+POST http://localhost:8003/login?email=mail@mail.ru&password=123456
+Accept: application/json
+Content-Type: application/json
+X-XSRF-TOKEN: "eyJpdiI6IjZ5VHBNSUlCdEFHbU9YRUhINDdBZkE9PSIsInZhbHVlIjoiV2tSaE5icmJ4WDN1aXB6bzFkZHVDUTFkcUhBcnQ3dmVjV3FXUUxHWFVOcXpOQjBXSFdoNEMwWWNQMTRnS1RETzRXbEZjSlZudjFPZDMrMFpJVjlqbVJycEZUa3Q3NUp5ODlINm92S0lTWk5zWnhyNmhQWDcxRS9rQVVKakovR3YiLCJtYWMiOiJjOGE4NDg5ZTYzODM0YzdjZTNmZGZlOTE0M2U5MTNkMWU2ZWU1Mzk0ZTU0NmJmNWJhZjBlY2FiOTI0MzQ5YWM5IiwidGFnIjoiIn0"
+
+
+
+###
+GET http://localhost:8003/sanctum/csrf-cookie
+Accept: application/json
+
+
+###
+# create user
+ POST http://localhost:8003/api/v1/users
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "test@test.ru",
+    "password": "123456",
+    "name": "test"
+}
+
+
+###
+# login user
+ POST http://localhost:8003/api/v1/login
+Accept: application/json
+Content-Type: application/json
+
+{
+    "email": "test@test.ru",
+    "password": "123456"
+}
+
+###
+# Me user
+ GET http://localhost:8003/api/v1/me
+Accept: application/json
+Content-Type: application/json
+

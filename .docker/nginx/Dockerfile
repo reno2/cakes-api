@@ -1,0 +1,4 @@
+FROM nginx:1.21.3-alpine
+
+EXPOSE 8003
+EXPOSE 3000
