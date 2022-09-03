@@ -1,9 +1,10 @@
-import Api from '~/api';
 
+export default  ({ $axios, store }, inject) => {
+  // Create a custom axios instance
+  const api = $axios.create()
+  const baseURL =  process.browser ? process.env.baseUrl : process.env.backendUrl
+  api.baseURL = baseURL
 
-export default function(ctx, inject) {
-  const api = new Api(ctx);
-  ctx.$api = api;
+  inject('apitest', api)
 
-  inject('api', api);
 }

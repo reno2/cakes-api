@@ -1,5 +1,6 @@
 <template>
   <div>
+
     <div v-if="posts">
       <div v-for="post in posts.data" :key="post.id">
         <span>{{post.title}}</span>
@@ -11,6 +12,7 @@
 
 <script>
 export default {
+  layout: 'LayoutDefault',
   data() {
     return {
       posts: null
@@ -19,19 +21,21 @@ export default {
   async mounted() {
    // console.log(process.env)
     if(!this.posts) {
-      this.posts = await this.$axios.$get('/posts');
+      //this.posts = await this.$apitest.get('/posts');
+      //console.log(this.posts )
     }
-  console.log(this.posts)
+  //this.$apitest('rewr')
 
   },
   name: 'IndexPage',
-  async asyncData({$axios}) {
+  async asyncData( {$repositories} ){
 
+    const {data : posts}  = await $repositories.ads.all()
+    return { posts }
 
-   const posts = await $axios.$get('/posts');
-    console.log(posts)
-  return { posts }
-
+  },
+  async middleware({ store, app }) {
+    await store.dispatch('menus/fetchMenu', app.$apitest)
   }
 }
 </script>

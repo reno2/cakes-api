@@ -16,19 +16,15 @@ class AuthController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request) {
         $creds = $request->validate([
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required',
             'name' => 'nullable|string',
         ]);
 
-        $user = User::where('email', $creds['email'])->first();
-        if ($user) {
-            return response(['error' => 1, 'message' => 'user already exists'], 409);
-        }
 
         $user = User::create([
             'email' => $creds['email'],
@@ -39,9 +35,30 @@ class AuthController extends Controller
         $defaultRoleSlug = config('hydra.default_user_role_slug', 'user');
         $user->roles()->attach(Role::where('slug', $defaultRoleSlug)->first());
 
-        return $user;
+        return response()->json([
+            'error' => 0, 'message' => 'успешная регистрация'
+        ],200);
     }
 
+    public function newLogin(Request $request){
+        $creds =  $request->only('email', 'password');
+        if(!$token = auth()->attempt($creds)){
+            return response()->json([
+                'error' => 1,
+                'message' => 'Unauathorized'
+            ],401);
+        }
+
+        return $this->responseWithToken($token);
+    }
+
+    private function responseWithToken($token){
+        return response()->json([
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth()->factory()->getTTL() * 60
+        ]);
+    }
 
     /**
      * Authenticate an user and dispatch token.
@@ -96,8 +113,9 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request){
+        auth()->logout();
         auth()->user()->tokens()->delete();
-        return response(['error' => 0], 200);
+        return response(['error' => 0, 'message' => 'успешно выщел'], 200);
     }
     public function setRole(Request $request){
 //        $data = $request->validate([

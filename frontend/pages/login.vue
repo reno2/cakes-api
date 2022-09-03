@@ -4,28 +4,29 @@
 </template>
 <script>
 export default {
+  layout: 'LayoutDefault',
   methods:{
      async login(){
        //const post = await this.$axios.$get('/csrf-cookie');
        try {
-         const post = await this.$axios.$get('/sanctum/csrf-cookie');
-       console.log(post)
+         //const post = await this.$axios.$get('/sanctum/csrf-cookie');
+         //console.log(post)
          // const y = await this.$axios.$post("/login", {
          //       email: 'test@test.test',
          //       password: 'test'
          // });
-
+         // console.log(y)
          //let response = await this.$axios.$get("/user");
          //console.log(response.data);
 
-         const log = await this.$auth.loginWith('laravelSanctum', {
+         const log = await this.$auth.loginWith('local', {
            data: {
              email: 'test@test.test',
              password: 'test'
            }
          })
-         // console.log(log)
-          await this.$router.push('/')
+       console.log(log)
+       //   await this.$router.push('/')
          // console.log(log)
        }catch (e) {
          console.log(e.message)

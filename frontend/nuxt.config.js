@@ -22,10 +22,14 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    // {
-    //   src: '~/plugins/api.js',
-    //   ssr: true
-    // }
+    {
+      src: '~/plugins/api.js',
+      ssr: true
+    },
+    {
+      src: '~/plugins/repositories.js',
+      ssr: true
+    }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -43,19 +47,40 @@ export default {
 
   auth: {
     strategies: {
-      laravelSanctum: {
-        provider: 'laravel/sanctum',
-        //url: process.env.BACKEND_PUBLIC_URL,
+      // laravelSanctum: {
+      //   provider: 'laravel/sanctum',
+      //   //url: process.env.BACKEND_PUBLIC_URL,
+      //   url: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
+      //   endpoints: {
+      //     login: { url: '/login', method: 'post' },
+      //     logout: { url: '/logout', method: 'post' },
+      //     user: { url: '/user', method: 'get' }
+      //   },
+      //   user:{
+      //     property:false
+      //   }
+      // },
+      local: {
+        token:{
+          property: 'access_token',
+          global: true,
+          type: 'bearer'
+        },
+        user: {
+            property: false // Данные не оборачиваются в обёртку
+        },
         url: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
         endpoints: {
           login: { url: '/login', method: 'post' },
           logout: { url: '/logout', method: 'post' },
           user: { url: '/user', method: 'get' }
-        },
-        user:{
-          property:false
         }
       }
+    },
+    redirect:{
+      login: '/login',
+      logout: '/login',
+      home: '/' // Редирект после успешной авторизации
     }
   },
 
@@ -69,9 +94,12 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
-
   server: {
     host: process.env.NUXT_HOST,
     port: process.env.NUXT_PORT,
   },
+  env: {
+    baseUrl:  process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
+    backendUrl: process.env.BACKEND_PRIVATE_URL + process.env.REST_API_PATH
+  }
 }
