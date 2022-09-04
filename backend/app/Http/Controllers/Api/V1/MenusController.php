@@ -16,29 +16,29 @@ class MenusController extends Controller
         $items = new CategoryRepository();
         $data = $items->forFrontPage();
 
-        $url = '/';
-        $data = $data->toArray();
-        $cnt = 0;
-        $limit = 4;
-        $lastItem = [
-            'title' => 'Ещё',
-            'CHILDREN' => [],
-            'is_active' => false,
-            'url' => '',
-            'is_more' => true,
-        ];
-        foreach ($data as $key => &$item) {
-            $item['url'] = implode('/', ['', 'category', $item['slug'], '']);
-            if ($cnt > $limit) {
-                $lastItem['CHILDREN'][] = $item;
-                unset($data[$key]);
-            }
-            $cnt++;
-        }
-        if (count($lastItem['CHILDREN'])) $data[] = $lastItem;
+//        $url = '/';
+//        $data = $data->toArray();
+//        $cnt = 0;
+//        $limit = 4;
+//        $lastItem = [
+//            'title' => 'Ещё',
+//            'CHILDREN' => [],
+//            'is_active' => false,
+//            'url' => '',
+//            'is_more' => true,
+//        ];
+//        foreach ($data as $key => &$item) {
+//            $item['url'] = implode('/', ['', 'category', $item['slug'], '']);
+//            if ($cnt > $limit) {
+//                $lastItem['CHILDREN'][] = $item;
+//                unset($data[$key]);
+//            }
+//            $cnt++;
+//        }
+//        if (count($lastItem['CHILDREN'])) $data[] = $lastItem;
 
         return response()->json([
-            'menu' => ($data) ? array_values($data) : []
+            'menu' => ($data) ? $data->toArray(): []
         ]);
 
     }

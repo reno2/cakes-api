@@ -8,8 +8,5 @@ const repositoryyBuilder = ($axios) => ({
 })
 
 export default (ctx, inject) => {
- // console.log(ctx.app.$apitest)
-  //const api = new Api(ctx);
-  console.log( repositoryyBuilder(ctx.app.$apitest))
   inject('repositories', repositoryyBuilder(ctx.app.$apitest))
 }
