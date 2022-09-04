@@ -1,0 +1,13 @@
+* {
+  font-family: "GothamProRegular", sans-serif;
+  color: #18191f;
+  box-sizing: border-box;
+}
+a {
+  color: #3f4254;
+  text-decoration: unset;
+}
+.container {
+  max-width: 1200px;
+  margin: auto;
+}
