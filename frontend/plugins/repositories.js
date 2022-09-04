@@ -4,7 +4,7 @@ import CategoryRepository from '~/repositories/CategoryRepository'
 
 const repositoryyBuilder = ($axios) => ({
   ads: new PostRepository( $axios ),
-  //category: new CategoryRepository('category', $axios),
+  category: new CategoryRepository($axios),
 })
 
 export default (ctx, inject) => {

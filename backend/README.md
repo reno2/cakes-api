@@ -21,3 +21,8 @@ http://localhost:15672/#/
 
 
 main сервис выбрасывает событие а first сервис в провайдере событий обрабатывает его 
+
+php artisan tinker
+
+Category::factory()->count(10)->create()
+Post::factory()->count(10)->create()

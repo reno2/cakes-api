@@ -9,7 +9,7 @@ use App\Http\Resources\PostResource;
 use App\Http\Resources\PostCollection;
 
 
-class PostController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,14 +35,24 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  string $slug
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        $post = Post::find($id);
-        if ($post) {
-            return new PostResource($post->load('category'));
+        $category = Category::where('slug', $slug)->first();
+
+        if (!$category) {
+
+        }
+
+        $ads = $category->articles()
+            ->where('published', 1)
+            //->where('moderate', 1)
+            ->paginate(12);
+
+        if ($ads) {
+            return new PostResource($ads->load('category'));
         }
         return response()->json(['message' => 'Not Found!'], 404);
     }
