@@ -15,5 +15,5 @@ yarn-error.log
 /.idea
 /.vscode
 backend/vendor
-.docker/mysql/data
+
 
