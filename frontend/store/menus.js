@@ -18,7 +18,7 @@ export const getters = {
 
 export const actions = {
   async fetchMenu({ commit }, $apitest=null) {
-    console.log('tert')
+    console.log('log menu store')
     try {
       const {data: { menu } } = await $apitest.get('/menu')
       commit('SET_MENU', menu)

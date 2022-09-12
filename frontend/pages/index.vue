@@ -1,37 +1,32 @@
 <template>
   <div>
-
-    <div v-if="posts">
-      <div v-for="post in posts.data" :key="post.id">
-        <span>{{post.title}}</span>
-      </div>
-    </div>
+    <mediator :components="sections"/>
   </div>
 
 </template>
 
 <script>
+import sectionsAdapters from '../adapters/sections'
+import Mediator from "../components/Mediator";
 export default {
+  components: {Mediator},
   layout: 'LayoutDefault',
   data() {
     return {
-      posts: null
+      sectionsOrder: ['banner', 'list_ads']
     }
-  },
-  async mounted() {
-   // console.log(process.env)
-    if(!this.posts) {
-      //this.posts = await this.$apitest.get('/posts');
-      //console.log(this.posts )
-    }
-  //this.$apitest('rewr')
-
   },
   name: 'IndexPage',
   async asyncData( {$repositories} ){
 
-    const {data : posts}  = await $repositories.ads.all()
-    return { posts }
+    const response  = (await $repositories.ads.all()).data
+
+   const { sections, seo } = response
+    console.log(sections)
+    return {
+      seo,
+      sections :  sectionsAdapters.sections(sections, ['banner', 'ads-front']),
+    }
 
   },
   async middleware({ store, app }) {

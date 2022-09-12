@@ -22,7 +22,25 @@ http://localhost:15672/#/
 
 main сервис выбрасывает событие а first сервис в провайдере событий обрабатывает его 
 
+# Из tinker
 php artisan tinker
 
 Category::factory()->count(10)->create()
 Post::factory()->count(10)->create()
+
+# Artisan
+php artisan db:seed
+
+Нужно добавть в файл backend/database/seeders/DatabaseSeeder.php
+
+Вызов команды создания
+
+`Category::factory(10)->create();` 
+`Post::factory(10)->create();`
+
+
+# Авторизация
+
+middleware
+auth.role - Проверяем пользователея по токену
+auth.role:admin,editor - Принимает массив ролей и проверяет ест лит они у пользователя 

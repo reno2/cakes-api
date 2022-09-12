@@ -109,7 +109,7 @@ class AuthController extends Controller
     }
 
     public function me(Request $request) {
-        return $request->user();
+        return $request->user()->load('roles');
     }
 
     public function logout(Request $request){

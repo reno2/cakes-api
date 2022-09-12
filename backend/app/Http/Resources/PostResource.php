@@ -6,6 +6,20 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class PostResource extends JsonResource
 {
+    public $resource;
+
+    public function __construct($resource, $type = null)
+    {
+        $this->resource = $resource;
+        parent::__construct($resource);
+        if ($type) {
+            $this->type = $type;
+        }
+    }
+
+    public ?string $type = null;
+
+    //  public static $wrap = null;
 
     /**
      * Transform the resource into an array.
@@ -15,10 +29,14 @@ class PostResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-          'title' => $this->title,
-          'date' => $this->created_at->format('d.m.Y'),
-          'category'=> new CategoryResource($this->category)
-        ];
+        return array_merge(
+            [
+                'type' => $this->type,
+                'date' => $this->created_at->format('d.m.Y'),
+                'category' => new CategoryResource($this->category),
+
+            ],
+            parent::toArray($request)
+        );
     }
 }

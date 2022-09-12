@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
         'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
         'is_admin' => IsAdminMiddleware::class,
+        'auth.role' => \App\Http\Middleware\JwtRoleAuthorize::class,
     ];
 }

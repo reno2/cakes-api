@@ -27,13 +27,13 @@ class TagRepository extends CoreRepository
                     })
                     ->with('attachments')
                     ->get();
-        foreach ($tags as $tag) {
-            $imgFromDb = $tag->attachments->first();
-            $tag->cover = $imgFromDb
-                ? Storage::url($imgFromDb->url)
-                : helper_returnFakeImg('collection');
-
-        }
+//        foreach ($tags as $tag) {
+//            $imgFromDb = $tag->attachments->first();
+//            $tag->cover = $imgFromDb
+//                ? Storage::url($imgFromDb->url)
+//                : helper_returnFakeImg('collection');
+//
+//        }
         return  $tags ?? [];
     }
 

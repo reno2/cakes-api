@@ -73,13 +73,13 @@ Content-Type: application/json
 
 ###
 # login user
- POST http://localhost:8003/api/v1/login
+ POST http://2cake.nuxt/api/v1/login
 Accept: application/json
 Content-Type: application/json
 
 {
     "email": "test@test.ru",
-    "password": "123456"
+    "password": "test"
 }
 
 ###
@@ -88,3 +88,21 @@ Content-Type: application/json
 Accept: application/json
 Content-Type: application/json
 
+###
+# Me user
+GET http://2cake.nuxt/api/v1/user
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8yY2FrZS5udXh0XC9hcGlcL3YxXC9sb2dpbiIsImlhdCI6MTY2MjYyODYyOSwiZXhwIjoxNjYyNjMyMjI5LCJuYmYiOjE2NjI2Mjg2MjksImp0aSI6IkpieExaRXA2V1JVV1VETFoiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.zYF2cFHkW5B7SafedhKLCNXnNKO_gHEbv8epAGiNuW0
+
+###
+# Create Article
+POST http://2cake.nuxt/api/v1/article
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8yY2FrZS5udXh0XC9hcGlcL3YxXC9sb2dpbiIsImlhdCI6MTY2MjYyODYyOSwiZXhwIjoxNjYyNjMyMjI5LCJuYmYiOjE2NjI2Mjg2MjksImp0aSI6IkpieExaRXA2V1JVV1VETFoiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.zYF2cFHkW5B7SafedhKLCNXnNKO_gHEbv8epAGiNuW0
+
+{
+    "description": "test@test.ru",
+    "user_id":1
+}
