@@ -1,4 +1,4 @@
-export default function makePath(type, slug) {
+export  const makePath = (type, slug) =>  {
   let path = null
   switch (type) {
     case 'category' :
@@ -7,3 +7,6 @@ export default function makePath(type, slug) {
   }
   return path
 }
+
+export const checkRequired = val => !!val
+

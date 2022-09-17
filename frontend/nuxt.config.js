@@ -43,15 +43,32 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    '@nuxtjs/svg-sprite',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
-    '@nuxtjs/svg-sprite',
+    'nuxt-ssr-cache',
   ],
+  cache: {
+    cache: true,
+   // useHostPrefix: false,
+   // pages: [],
 
+  },
+  store: {
+    type: 'memory',
+
+    // maximum number of pages to store in memory
+    // if limit is reached, least recently used page
+    // is removed.
+    max: 100,
+
+    // number of seconds to store this page in cache
+    ttl: 60,
+  },
   svgSprite: {
     input: '~/assets/svg/'
   },

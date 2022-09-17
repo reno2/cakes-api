@@ -4,7 +4,7 @@
       <a @click.prevent="logout" href="#">выйти</a>
     </template>
     <template v-else>
-      <a @click.prevent="login" href="#">войти</a>
+      <nuxt-link to="/login">войти</nuxt-link>
     </template>
   </div>
 </template>

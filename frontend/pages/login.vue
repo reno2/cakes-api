@@ -1,10 +1,19 @@
 <template>
-  <a @click.prevent="login" href="#">Login</a>
+  <div>
+    <div class="container">
+      <LoginForm />
+      <a @click.prevent="login" href="#">Login</a>
+    </div>
+  </div>
+
 
 </template>
 <script>
+import LoginForm from "../components/forms/LoginForm";
+
 export default {
   layout: 'LayoutDefault',
+  components: {LoginForm},
   methods:{
      async login(){
        //const post = await this.$axios.$get('/csrf-cookie');

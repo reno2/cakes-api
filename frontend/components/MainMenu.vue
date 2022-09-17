@@ -9,7 +9,7 @@
 </template>
 <script>
 
-import makePath from '@/helpers/functions';
+import { makePath } from '@/helpers/functions';
 
 export default {
   name: 'MainMenu',

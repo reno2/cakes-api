@@ -1,12 +1,21 @@
 <template>
   <div>
-
+    <div v-for="cart in list">
+      <DetailAds :card="cart" />
+    </div>
   </div>
 </template>
 
 <script>
-export default {
 
+import DetailAds from "./DetailAds";
+export default {
+  components:{
+    DetailAds
+  },
+  props: {
+    list: Array
+  }
 }
 </script>
 

@@ -22,7 +22,7 @@ export default {
     const response  = (await $repositories.ads.all()).data
 
    const { sections, seo } = response
-    console.log(sections)
+
     return {
       seo,
       sections :  sectionsAdapters.sections(sections, ['banner', 'ads-front']),

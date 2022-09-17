@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PostCollection;
 use App\Http\Resources\PostResource;
+use App\Models\Category;
 use App\Models\Post;
 use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
@@ -17,8 +18,9 @@ class FrontController extends Controller
 {
     public function index()
     {
-        $ads = new PostCollection(Post::paginate(5), 'ads-front');
-
+      $ads = new PostCollection(Post::paginate(5), 'ads-front');
+      //  $ads =  Post::paginate(5)->toArray();
+      //  $cat = Category::where('parent_id', 0)->testMacro()->get();
 
         $banner = [
             'type' => 'banner',
