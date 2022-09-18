@@ -3,14 +3,15 @@ import BaseValidator from './BaseValidator'
 
 export default class LoginValidator extends BaseValidator{
 
-  rules = [
-    this.ruleRequire,
-    this.ruleNumber,
-  ]
+  rules = {
+    name: 'ruleRequire,ruleNumber',
+    email: 'ruleIsEmail',
+  }
 
   messages  = {
     ruleRequire: 'Поле объязательно к заполнению',
-    ruleNumber: 'Должно быть числом'
+    ruleNumber: 'Должно быть числом',
+    ruleIsEmail: 'Не корректный email'
   }
 
 

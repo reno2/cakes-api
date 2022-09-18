@@ -2,12 +2,12 @@
 
   <div class="form-cell" :class="renderClasses()">
     <label class="form-cell__label js_label">{{ label }} </label>
-    <input ref="input" class="form-cell__input js_input" v-bind="$attrs" v-model="model" v-on="listeners">
+    <input ref="input" class="form-cell__input js_input"  v-model="model" v-on="listeners">
     <svg v-if="model" class="form-cell__clean js_clean" @click="cleanInput">
       <use xlink:href="~/assets/icons/icons.svg#icon-close"></use>
     </svg>
-    <div class="form-cell__errors" v-if="errors" v-for="error in errors">
-      <div class="form-cell__error">{{error}}</div>
+    <div class="form-cell__errors" v-if="errors">
+      <div v-for="error in errors" class="form-cell__error">{{error}}</div>
     </div>
   </div>
 
@@ -62,6 +62,7 @@ export default {
       return {
         ...this.$listeners,
         input: event => {
+          this.errors = []
           this.$emit('input', event.target.value)
           this.classes.filled = !!(event.target.value)
         },
@@ -77,6 +78,7 @@ export default {
     },
     cleanInput() {
       this.model = ''
+      this.errors = []
       this.classes.filled = false
       this.$emit('input', '')
     },
@@ -87,7 +89,6 @@ export default {
 
       for(let rule in this.rules ){
         const ruleFunc = this.rules[rule].rule
-
         console.log(this[ruleFunc](this.model))
         // /console.log(ruleFunc.call(null, this.model))
       }
@@ -158,9 +159,20 @@ export default {
   opacity: 0.54;
   cursor: pointer;
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 15px;
+  /*top: 50%;*/
+  /*transform: translateY(-50%);*/
   right: 10px;
 }
 
+.form-cell__errors{
+  margin-top: 4px;
+}
+.form-cell__error {
+  font-size: 12px;
+  color: tomato;
+}
+.form-cell__error:not(:last-child){
+  margin-bottom: 2px;
+}
 </style>

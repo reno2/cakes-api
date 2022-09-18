@@ -31,34 +31,35 @@ export default {
     return {
       ValidateClass: Function,
       formData: {},
-      tiker: "default",
     }
   },
   methods:{
     mainHandler(){
-      //console.log(this.$children)
-        this.$emit('submit', this.fields)
-        this.validateForm()
+        if(this.validateForm()) {
+          this.$emit('submit', this.formData)
+        }
     },
     validateForm(){
       if(!this.$children) return
 
+      let isErrors = true
 
+      this.$children.forEach(child => {
+        child.errors = []
 
-      сonst newItem = { name: this.tiker };
+        const inputName = child._props.name
+        const rules = (this.ValidateClass.rules[inputName]).split(',')
+        rules.forEach(rule => {
 
-      console.log(this.ValidateClass.rules)
+          if(!this.ValidateClass[rule](child.model)){
+            if(isErrors) isErrors = !isErrors
 
-
-      const isErrors = this.$children.forEach(child => {
-       // console.log(child)
-        //if(child.validate === undefined) return false;
-      //  let res = child.doValidate()
-
-       // return res
-
+            child.errors.push(this.ValidateClass.messages[rule])
+          }
+        })
       })
-      console.log('errors: ', isErrors)
+
+     return isErrors
     },
     changeValue(name, event){
 

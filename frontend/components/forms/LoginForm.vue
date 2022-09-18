@@ -30,41 +30,21 @@ export default {
           type: 'text',
           name: 'name',
           label: 'Ваше имя',
-          rules: [
-            {
-              rule: 'ruleRequire'
-            }
-          ],
         },
         {
           type: 'text',
           name: 'email',
           label: 'Ваш email',
-          rules: [
-          ]
         }
       ]
     }
   },
   methods: {
     submitForm(event) {
-      //console.log(event)
+      console.log(event)
     }
   },
-  computed: {
-    validation() {
-      let isValidate = true;
-
-      // for (let i = 0; i < this.validators.length; i++) {
-      //   console.log(1, this.validators[i](this.login))
-      //   if (!this.validators[i](this.login)) {
-      //     break;
-      //   }
-      // }
-
-      return isValidate
-    }
-  }
+  computed: {}
 }
 </script>
 

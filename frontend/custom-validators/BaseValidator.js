@@ -7,13 +7,30 @@ export default class BaseValidator {
     console.log(this.rules)
   }
 
+  ruleIsEmpty(value){
+      if (value === null || value === undefined || value === '') {
+        return true;
+      }
+
+      if (Array.isArray(value) && value.length === 0) {
+        return true;
+      }
+
+      return false;
+  }
 
   ruleRequire(val){
     return !!val
   }
 
+  ruleIsEmail(val){
+    const re =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(val));
+  }
+
   ruleNumber(val){
-    return Number.isInteger(val)
+    return  /^-?[0-9]+$/.test(String(val));
   }
 
 }
