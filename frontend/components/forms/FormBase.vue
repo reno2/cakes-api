@@ -1,16 +1,26 @@
-<template xmlns="http://www.w3.org/1999/html">
-  <form action="" @submit.prevent="mainHandler">
-    <div  v-for="(field, index) in parsedComponents">
-      <component :is="field.compFunc"
-                 v-bind="field"
-                 @input-change="changeValue(field.name, $event)"
-                 @input="changeValue(field.name, $event)"
-      />
+<template>
+  <div class="form-base">
+
+    <slot name="form-left"/>
+
+    <div class="form-base__content">
+      <div class="form-base__header">
+        <slot name="form-header"/>
+      </div>
+      <form class="form-base__form" action="" @submit.prevent="mainHandler">
+        <template v-for="(field, index) in parsedComponents">
+          <component :is="field.compFunc"
+                     v-bind="field"
+                     @input-change="changeValue(field.name, $event)"
+                     @input="changeValue(field.name, $event)"
+          />
+        </template>
+        <slot></slot>
+        <button class="btn-big btn-main">Войти</button>
+      </form>
     </div>
-    <input type="text" value="tesr">
-      <slot></slot>
-    <button >Отправить</button>
-  </form>
+
+  </div>
 
 </template>
 
@@ -23,24 +33,25 @@ const COMPONENTS = [
   {name: 'InputBase', type: 'text'},
 ];
 export default {
-  props:{
-      fields: [],
-      Validator: Function
+  props: {
+    formType: null,
+    fields: [],
+    Validator: Function
   },
-  data(){
+  data() {
     return {
       ValidateClass: Function,
       formData: {},
     }
   },
-  methods:{
-    mainHandler(){
-        if(this.validateForm()) {
-          this.$emit('submit', this.formData)
-        }
+  methods: {
+    mainHandler() {
+      if (this.validateForm()) {
+        this.$emit('submit', this.formData)
+      }
     },
-    validateForm(){
-      if(!this.$children) return
+    validateForm() {
+      if (!this.$children) return
 
       let isErrors = true
 
@@ -51,24 +62,24 @@ export default {
         const rules = (this.ValidateClass.rules[inputName]).split(',')
         rules.forEach(rule => {
 
-          if(!this.ValidateClass[rule](child.model)){
-            if(isErrors) isErrors = !isErrors
+          if (!this.ValidateClass[rule](child.model)) {
+            if (isErrors) isErrors = !isErrors
 
             child.errors.push(this.ValidateClass.messages[rule])
           }
         })
       })
 
-     return isErrors
+      return isErrors
     },
-    changeValue(name, event){
+    changeValue(name, event) {
 
       this.$set(this.formData, name, event)
-     //this.formData.name = event
+      //this.formData.name = event
     }
 
   },
-  computed:{
+  computed: {
     parsedComponents() {
 
       return this.fields ? this.fields.reduce((components, component, index, array) => {
@@ -101,6 +112,18 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.form-base__content {
+  display: flex;
+  margin: 0 auto;
+  background: #FFFFFF;
+  box-shadow: 0 40px 60px 0 rgb(37 59 112 / 10%);
+  border-radius: 9px;
+  padding: 80px 40px 24px;
+  flex-direction: column;
+}
 
+.form-base__form {
+  width: 100%;
+}
 </style>

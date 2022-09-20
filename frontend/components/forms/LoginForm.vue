@@ -1,14 +1,16 @@
 <template>
-  <div>
+  <div class="login-page">
 
-    <FormBase :Validator="Validator" :fields="fields" @submit="submitForm">
-      In slots
-
+    <FormBase form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
+      <template v-slot:form-header>
+        <div class="block-title">
+          <div class="block-title__name">Авторизация</div>
+          <div class="block-title__desc">Ещё нет аккаунта?
+            <nuxt-link class="block-title__link" to="/">Регистрация</nuxt-link>
+          </div>
+        </div>
+      </template>
     </FormBase>
-<!--    <InputBase type="text" label="Ваш логин" v-model="login"/>-->
-<!--    <InputBase label="Ваш email" v-model="email"/>-->
-
-
 
   </div>
 </template>
@@ -48,6 +50,26 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+.login-page{
+  max-width: 450px;
+  margin: auto;
+}
 
+
+/* region Block Title */
+.block-title{
+  margin-bottom: 32px;
+}
+.block-title__name{
+  font-size: 36px;
+  font-weight: 700;
+  color: #344055;
+  margin-bottom: 8px;
+}
+.block-title__desc{
+  color: #b1b2b9;
+  font-size: 14px;
+}
+/* endregion Block Title */
 </style>

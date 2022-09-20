@@ -6,9 +6,7 @@
     </header>
 
     <main class="page-content">
-      <div class="container">
         <slot name="page-content"/>
-      </div>
     </main>
 
     <footer class="page-footer">

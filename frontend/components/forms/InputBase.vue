@@ -106,7 +106,7 @@ export default {
 
 <style>
 .form-cell {
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   position: relative;
 }
 
@@ -114,7 +114,7 @@ export default {
   position: absolute;
   pointer-events: none;
   left: 16px;
-  top: 15px;
+  top: 11px;
   -webkit-transition: .2s ease all;
   -o-transition: .2s ease all;
   transition: .2s ease all;
@@ -144,9 +144,9 @@ export default {
   background: #FFFFFF;
   border: 1px solid #D7DBDE;
   box-sizing: border-box;
-  border-radius: 8px;
+  border-radius: 5px;
   -webkit-appearance: none;
-  height: 48px;
+  height: 42px;
   padding-left: 16px;
   padding-right: 24px;
   outline: unset;

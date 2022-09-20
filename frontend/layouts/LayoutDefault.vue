@@ -3,8 +3,8 @@
     <template v-slot:page-header>
       <f-header />
     </template>
-    <template v-slot:page-content>
-      <nuxt />
+    <template class="main" v-slot:page-content>
+           <nuxt />
     </template>
     <template v-slot:page-footer>
       <f-footer />

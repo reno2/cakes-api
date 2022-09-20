@@ -1,9 +1,6 @@
 <template>
   <div>
-    <div class="container">
       <LoginForm />
-      <a @click.prevent="login" href="#">Login</a>
-    </div>
   </div>
 
 

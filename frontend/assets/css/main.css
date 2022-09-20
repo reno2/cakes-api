@@ -3,11 +3,22 @@
   color: #18191f;
   box-sizing: border-box;
 }
+body{
+  margin: 0;
+}
 a {
   color: #3f4254;
   text-decoration: unset;
+}
+button{
+  outline: unset;
+  box-sizing: border-box;
 }
 .container {
   max-width: 1200px;
   margin: auto;
 }
+.page-content{
+  min-height: 100vh;
+}
+

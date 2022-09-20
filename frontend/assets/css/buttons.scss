@@ -1,0 +1,141 @@
+
+.btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: unset;
+}
+
+// region Sizes
+
+.btn-small{
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 24px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.btn-big{
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 15px;
+  padding: 18px 46px;
+  border-radius: 193px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+}
+.btn-middle-round {
+  font-size: 14px;
+  line-height: 23px;
+  border-radius: 37px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 23px;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.btn-middle{
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 23px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 12px;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-square{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+  padding: 8px;
+  height: fit-content;
+}
+
+// region Style
+.btn-main{
+  background: #D3A1DF;
+  color: #FFFFFF;
+  cursor: pointer;
+  border: unset;
+  span{
+    color: #FFFFFF;
+  }
+  svg{
+    fill: #FFFFFF;
+  }
+}
+
+.btn-secondary{
+  border: 2px solid #D3A1DF;
+  color: #231F20;
+  cursor: pointer;
+  span{
+    color: #231F20;
+  }
+  svg{
+    fill: #231F20;
+  }
+}
+
+.btn-grey{
+  background: #f6f6f6;
+  color: #2e2e33;
+  span{
+    color: #2e2e33;
+  }
+  svg{
+    margin-right: 6px;
+    fill: #2e2e33;
+  }
+}
+
+.btn-red{
+  background: #ea806f;
+  color: #fff;
+  border: 2px solid #ea806f;
+  span{
+    color: #fff;
+  }
+  &:hover{
+    color: #fff;
+  }
+  svg{
+    margin-right: 6px;
+    fill: #ea806f;
+  }
+}
+
+.btn-icon{
+  background: #ecefef;
+  svg{
+    fill: #313a46;
+  }
+}
+
+.wide{
+  width: 100%;
+}
+.half{
+  width: 50%;
+}
+
+// region Unset Styles
+.btn-unset:hover,
+.btn-unset{
+  background: unset;
+}
