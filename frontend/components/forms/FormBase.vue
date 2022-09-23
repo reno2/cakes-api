@@ -58,8 +58,12 @@ export default {
       this.$children.forEach(child => {
         child.errors = []
 
+        if(!child._props.name) return
+
         const inputName = child._props.name
+
         const rules = (this.ValidateClass.rules[inputName]).split(',')
+
         rules.forEach(rule => {
 
           if (!this.ValidateClass[rule](child.model)) {
@@ -113,6 +117,9 @@ export default {
 </script>
 
 <style>
+.form-base.min_width{
+  min-width: 450px;
+}
 .form-base__content {
   display: flex;
   margin: 0 auto;

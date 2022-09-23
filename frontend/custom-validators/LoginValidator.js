@@ -4,13 +4,13 @@ import BaseValidator from './BaseValidator'
 export default class LoginValidator extends BaseValidator{
 
   rules = {
-    name: 'ruleRequire,ruleNumber',
-    email: 'ruleIsEmail',
+    password: 'ruleRequire,ruleEnAlphaDashValidator',
+    email: 'ruleRequire,ruleIsEmail',
   }
 
   messages  = {
     ruleRequire: 'Поле объязательно к заполнению',
-    ruleNumber: 'Должно быть числом',
+    ruleEnAlphaDashValidator: 'Английсие буквы и _',
     ruleIsEmail: 'Не корректный email'
   }
 

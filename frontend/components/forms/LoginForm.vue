@@ -1,18 +1,18 @@
 <template>
-  <div class="login-page">
 
-    <FormBase form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
+
+    <FormBase class="login-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
       <template v-slot:form-header>
         <div class="block-title">
           <div class="block-title__name">Авторизация</div>
           <div class="block-title__desc">Ещё нет аккаунта?
-            <nuxt-link class="block-title__link" to="/">Регистрация</nuxt-link>
+            <nuxt-link class="block-title__link" to="/register">Регистрация</nuxt-link>
           </div>
         </div>
       </template>
     </FormBase>
 
-  </div>
+
 </template>
 
 <script>
@@ -30,20 +30,33 @@ export default {
       fields: [
         {
           type: 'text',
-          name: 'name',
-          label: 'Ваше имя',
+          name: 'email',
+          label: 'Ваш email',
         },
         {
           type: 'text',
-          name: 'email',
-          label: 'Ваш email',
-        }
+          name: 'password',
+          label: 'Ваш пароль',
+        },
       ]
     }
   },
   methods: {
-    submitForm(event) {
-      console.log(event)
+    async submitForm(data) {
+      const {email, password} = data
+
+      try{
+        const log = await this.$auth.loginWith('local', {
+          data: {
+            email: 'chedia@mail.ru',
+            password: '123456'
+          }
+        })
+        console.log(log)
+      }catch (e) {
+        console.log(e.message)
+      }
+
     }
   },
   computed: {}
@@ -51,11 +64,11 @@ export default {
 </script>
 
 <style>
-.login-page{
-  max-width: 450px;
-  margin: auto;
-}
 
+.login-form{
+  max-width: 450px;
+  margin: 80px auto 0;
+}
 
 /* region Block Title */
 .block-title{
