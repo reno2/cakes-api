@@ -21,10 +21,12 @@ export default {
   },
   name: 'Category',
   async asyncData( {$repositories, params} ){
-
-    const { data : {data : posts }}= await $repositories.category.show(params.slug)
-    return { posts }
-
+    try {
+      const {data: {data: posts}} = await $repositories.category.show(params.slug)
+      return {posts}
+    }catch (e) {
+      
+    }
   },
   async middleware({ store, app }) {
     await store.dispatch('menus/fetchMenu', app.$apitest)

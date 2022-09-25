@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\V1\AuthController;
+
 use App\Http\Controllers\Api\V1\FrontController;
 use App\Http\Controllers\Api\V1\IndexController;
 use App\Http\Controllers\Api\V1\profile\ArticleController;
@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\MenusController;
+use App\Http\Controllers\Api\V1\AuthController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,13 +24,19 @@ use App\Http\Controllers\Api\V1\MenusController;
 |
 */
 //Auth::routes();
+
+
+
+//Route::post('/login', [AuthController::class, 'newLogin']);
+
 Route::group(['prefix'=>'v1'], function() {
+
 
 //    Route::apiResources([
 //        'posts' => PostController::class,
 //    ]);
 
-//    Route::get('/user', [AuthController::class, 'me'])->middleware(['auth.role:admin']);
+  Route::get('/user', [AuthController::class, 'me'])->middleware(['auth.role']);
 //
 //    Route::get('/test', function(){
 //        $user = User::find(1);
@@ -40,12 +48,12 @@ Route::group(['prefix'=>'v1'], function() {
 
     //Route::post('/posts', [ArticleController::class, 'store']);
 
-    Route::get('/posts', [FrontController::class, 'index'])->name('main');
-    Route::get('/img', function(){
-        dd( Storage::url('/images/hero/hero_bg.png'));
-        //Storage::disk('public')->put('text.txt', 'hi');
-        echo 'or';
-    });
+    //Route::get('/posts', [FrontController::class, 'index'])->name('main');
+    Route::post('/posts', [FrontController::class, 'index'])->name('main');
+//    Route::get('/img', function(){
+//        dd( Storage::url('/images/hero/hero_bg.png'));
+//        //Storage::disk('public')->put('text.txt', 'hi');
+//    });
 
 
     Route::get('/menu', [MenusController::class, 'frontMenu'])->name('frontMenu');
@@ -59,7 +67,10 @@ Route::group(['prefix'=>'v1'], function() {
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     });
 
-    Route::post('register', [AuthController::class, 'store'])->name('store');
+   Route::post('register', [AuthController::class, 'store'])->name('store');
+
+
+
     Route::post('login', [AuthController::class, 'newLogin'])->name('login');
 
 

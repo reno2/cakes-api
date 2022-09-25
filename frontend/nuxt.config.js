@@ -52,6 +52,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     'nuxt-ssr-cache',
+    '@nuxtjs/proxy'
   ],
   cache: {
     cache: true,
@@ -99,7 +100,7 @@ export default {
         },
         url: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
         endpoints: {
-          login: { url: '/login', method: 'post' },
+          login: { url: 'login', method: 'post' },
           logout: { url: '/logout', method: 'post' },
           user: { url: '/user', method: 'get' }
         }
@@ -107,7 +108,7 @@ export default {
     },
     redirect:{
       login: '/login',
-      logout: '/login',
+      logout: '/logout',
       home: '/' // Редирект после успешной авторизации
     }
   },
@@ -117,6 +118,11 @@ export default {
      browserBaseURL: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
      credentials: true,
      proxy: true
+  },
+  proxy: {
+    //'/api/v1/': 'http://localhost:8003',
+    //'/api/v1/': 'http://localhost:8003',
+    '/api/v1/': 'http://localhost:8003',
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build

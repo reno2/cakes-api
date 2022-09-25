@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -21,34 +22,39 @@ class AuthController extends Controller
     public function store(Request $request) {
         $creds = $request->validate([
             'email' => 'required|email|unique:users,email',
-            'password' => 'required',
-            'name' => 'nullable|string',
+            'password' => 'required|confirmed',
         ]);
 
 
         $user = User::create([
+            'name' => $creds['email'],
             'email' => $creds['email'],
             'password' => Hash::make($creds['password']),
-            'name' => $creds['name'],
         ]);
 
         $defaultRoleSlug = config('hydra.default_user_role_slug', 'user');
         $user->roles()->attach(Role::where('slug', $defaultRoleSlug)->first());
 
-        return response()->json([
-            'error' => 0, 'message' => 'успешная регистрация'
-        ],200);
+//        return response()->json([
+//            'error' => 0, 'message' => $user
+//        ],200);
+
+        return new UserResource($user);
+
     }
 
     public function newLogin(Request $request){
         $creds =  $request->only('email', 'password');
+//        return response()->json(
+//            $request->toArray()
+//        );
         if(!$token = auth()->attempt($creds)){
             return response()->json([
                 'error' => 1,
                 'message' => 'Unauathorized'
             ],401);
         }
-
+        //$cookie = $cookie()
         return $this->responseWithToken($token);
     }
 

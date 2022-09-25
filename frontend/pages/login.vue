@@ -25,13 +25,13 @@ export default {
          //let response = await this.$axios.$get("/user");
          //console.log(response.data);
 
-         const log = await this.$auth.loginWith('local', {
-           data: {
-             email: 'test@test.test',
-             password: 'test'
-           }
-         })
-       console.log(log)
+         // const log = await this.$auth.loginWith('local', {
+         //   data: {
+         //     email: 'test@test.test',
+         //     password: 'test'
+         //   }
+         // })
+       //console.log(log)
        //   await this.$router.push('/')
          // console.log(log)
        }catch (e) {

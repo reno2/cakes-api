@@ -46,9 +46,10 @@ export default {
   },
   methods: {
     mainHandler() {
-      if (this.validateForm()) {
-        this.$emit('submit', this.formData)
-      }
+      this.$emit('submit', this.formData)
+      // if (this.validateForm()) {
+      //   this.$emit('submit', this.formData)
+      // }
     },
     validateForm() {
       if (!this.$children) return
@@ -58,9 +59,9 @@ export default {
       this.$children.forEach(child => {
         child.errors = []
 
-        if(!child._props.name) return
-
         const inputName = child._props.name
+
+        if(!this.ValidateClass.rules[inputName]) return
 
         const rules = (this.ValidateClass.rules[inputName]).split(',')
 

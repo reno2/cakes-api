@@ -2,7 +2,7 @@
 <div>
   <div class="container">
     This is error
-    <h2>{{error.statusCode}}</h2>
+    <h2>{{error}}</h2>
   </div>
 
 </div>
