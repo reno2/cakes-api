@@ -7,6 +7,8 @@
 
 <script>
 export default {
+  layout: 'LayoutDefault',
+  middleware: 'profile',
   data() {
     return {
       user: null

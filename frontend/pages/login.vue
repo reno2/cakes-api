@@ -9,6 +9,8 @@
 import LoginForm from "../components/forms/LoginForm";
 
 export default {
+  middleware: 'auth',
+  auth : 'guest',
   layout: 'LayoutDefault',
   components: {LoginForm},
   methods:{
@@ -35,7 +37,7 @@ export default {
        //   await this.$router.push('/')
          // console.log(log)
        }catch (e) {
-         console.log(e.message)
+         //console.log(e.message)
        }
       // console.log(this.$auth)
       // this.$auth.loginWith('laravelSanctum', {

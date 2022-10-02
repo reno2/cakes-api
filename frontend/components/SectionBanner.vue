@@ -23,7 +23,10 @@
 export default {
   props: {
     list: Object
-  }
+  },
+ mounted(){
+   console.log(this.isClient)
+ }
 }
 </script>
 

@@ -49,7 +49,7 @@ Route::group(['prefix'=>'v1'], function() {
     //Route::post('/posts', [ArticleController::class, 'store']);
 
     //Route::get('/posts', [FrontController::class, 'index'])->name('main');
-    Route::post('/posts', [FrontController::class, 'index'])->name('main');
+    Route::get('/posts', [FrontController::class, 'index'])->name('main');
 //    Route::get('/img', function(){
 //        dd( Storage::url('/images/hero/hero_bg.png'));
 //        //Storage::disk('public')->put('text.txt', 'hi');

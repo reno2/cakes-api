@@ -5,7 +5,7 @@ volumes:
         driver: local
         driver_opts:
             type: 'none'
-            device: /var/www/docker/microservices/main/frontend/
+            device: ${PWD}/frontend/ # eed full path to dir
             o: bind
 services:
     service-api-nuxt:
@@ -42,7 +42,7 @@ services:
       volumes:
           - "./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf"
           - ./backend:/var/www/html
-          - .frontend/static:/var/www/static
+          - ./frontend/static:/var/www/static
       depends_on:
           - service-fpm-api
       networks:

@@ -3,7 +3,9 @@
     <div class="container">
       <div class="header-desktop__inner">
         <div class="header-desktop__logo">
+          <nuxt-link to="/">
           <img class="header-desktop__svg" src="/full-logo.svg" alt="">
+          </nuxt-link>
         </div>
         <div class="header-desktop__menu">
           <MainMenu :menuItems="header"/>
@@ -36,12 +38,6 @@ export default {
     ...mapGetters({
       header: 'menus/getMenus'
     })
-  },
-  async asyncData({$apitest}) {
-
-  },
-  async middleware({store, $apitest}) {
-    await store.dispatch('menus/fetchMenu', $apitest)
   }
 }
 </script>

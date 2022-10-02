@@ -34,6 +34,10 @@ export default {
       ssr: true
     },
     {
+      src: '~/plugins/isClient.js',
+
+    },
+    {
       src: '~/plugins/repositories.js',
       ssr: true
     }
@@ -52,6 +56,7 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     'nuxt-ssr-cache',
+    '@nuxtjs/svg-sprite',
     '@nuxtjs/proxy'
   ],
   cache: {
@@ -100,7 +105,7 @@ export default {
         },
         url: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
         endpoints: {
-          login: { url: 'login', method: 'post' },
+          login: { url: '/login', method: 'post' },
           logout: { url: '/logout', method: 'post' },
           user: { url: '/user', method: 'get' }
         }
@@ -120,8 +125,6 @@ export default {
      proxy: true
   },
   proxy: {
-    //'/api/v1/': 'http://localhost:8003',
-    //'/api/v1/': 'http://localhost:8003',
     '/api/v1/': 'http://localhost:8003',
   },
 
@@ -135,5 +138,8 @@ export default {
   env: {
     baseUrl:  process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
     backendUrl: process.env.BACKEND_PRIVATE_URL + process.env.REST_API_PATH
-  }
+  },
+  // router:{
+  //   middleware: 'profile'
+  // }
 }

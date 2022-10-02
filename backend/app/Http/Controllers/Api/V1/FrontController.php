@@ -16,18 +16,18 @@ use PHPUnit\Framework\MockObject\Stub\ReturnReference;
 
 class FrontController extends Controller
 {
-    public function index()
+    public function index(Request  $request)
     {
       $ads = new PostCollection(Post::paginate(5), 'ads-front');
       //  $ads =  Post::paginate(5)->toArray();
       //  $cat = Category::where('parent_id', 0)->testMacro()->get();
-
+//dd(env('APP_URL'));
         $banner = [
             'type' => 'banner',
             'list' => [
                 'images' => [
-                    'desc' => asset('storage/images/hero/hero.jpg'),
-                    'mob' => asset('storage/images/hero/hero_mob.png'),
+                    'desc' => env('APP_URL').'/storage/images/hero/hero.jpg',
+                    'mob' => env('APP_URL'). '/storage/images/hero/hero_mob.png',
                 ],
                 'title' => 'Найди своего кондитера с 2CAKE',
                 'desc' => 'Господа, высокотехнологичная концепция общественного уклада',

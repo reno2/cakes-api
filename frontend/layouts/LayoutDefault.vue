@@ -21,6 +21,9 @@ export default {
   name: 'LayoutDefault',
   components: {
     FHeader, FLayout, FFooter
+  },
+  async middleware({store, $apitest}) {
+    await store.dispatch('menus/fetchMenu', $apitest)
   }
 };
 </script>

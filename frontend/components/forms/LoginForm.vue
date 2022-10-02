@@ -21,6 +21,7 @@ import FormBase from "./FormBase";
 
 import Validator from '../../custom-validators/LoginValidator'
 export default {
+  auth: 'guest',
   components: {FormBase, InputBase},
   data() {
     return {
