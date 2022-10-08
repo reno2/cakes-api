@@ -4,11 +4,13 @@
       <div class="header-desktop__inner">
         <div class="header-desktop__logo">
           <nuxt-link to="/">
-          <img class="header-desktop__svg" src="/full-logo.svg" alt="">
+            <img class="header-desktop__svg" src="/full-logo.svg" alt="">
           </nuxt-link>
         </div>
         <div class="header-desktop__menu">
-          <MainMenu :menuItems="header"/>
+          <div class="main-menu">
+            <MainMenu :menuItems="header"/>
+          </div>
         </div>
         <div class="header-desktop__profile">
           <ProfileHeader/>
@@ -42,13 +44,22 @@ export default {
 }
 </script>
 <style>
-.header-desktop {
-  display: flex;
-}
+
+
 .header-desktop__inner {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.header-desktop__menu {
+  flex-grow: 1;
+  margin: 0 24px;
+  display: flex;
+  justify-content: center;
+  position: relative;
   align-items: center;
 }
 </style>

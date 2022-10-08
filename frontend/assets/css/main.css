@@ -41,3 +41,7 @@ ol, ul, dl {
 .page-content > div{
   height: inherit;
 }
+a:hover {
+  color: #419bbf;
+  text-decoration: none;
+}

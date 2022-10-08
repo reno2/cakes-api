@@ -5,7 +5,7 @@ volumes:
         driver: local
         driver_opts:
             type: 'none'
-            device: ${PWD}/frontend/ # eed full path to dir
+            device: ${PWD}/frontend/ # need full path to dir
             o: bind
 services:
     service-api-nuxt:
