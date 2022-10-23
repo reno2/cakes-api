@@ -23,7 +23,7 @@
 </template>
 <script>
 import {mapGetters, mapMutations} from 'vuex';
-import MainMenu from '@/components/MainMenu';
+import MainMenu from '@/components/menus/MainMenu';
 import ProfileHeader from '@/components/ProfileHeader';
 
 export default {

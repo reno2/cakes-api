@@ -1,7 +1,7 @@
 <template>
 
 
-    <FormBase class="login-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
+    <FormBase class="login-form inline-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
       <template v-slot:form-header>
         <div class="block-title">
           <div class="block-title__name">Авторизация</div>
@@ -49,8 +49,8 @@ export default {
       try{
         const log = await this.$auth.loginWith('local', {
           data: {
-            email: 'chedia@mail.ru',
-            password: '123456'
+            email: data.email,
+            password: data.password
           }
         })
         console.log(log)

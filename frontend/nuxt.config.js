@@ -25,6 +25,7 @@ export default {
   css: [
     '@/assets/css/main.css',
     '@/assets/css/buttons',
+    '@/assets/scss/animations',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
@@ -57,8 +58,12 @@ export default {
     '@nuxtjs/auth-next',
     'nuxt-ssr-cache',
     '@nuxtjs/svg-sprite',
-    '@nuxtjs/proxy'
+    '@nuxtjs/proxy',
+    '@nuxtjs/style-resources'
   ],
+  styleResources: {
+    scss: ['./assets/scss/*.scss']
+  },
   cache: {
     cache: true,
    // useHostPrefix: false,
@@ -106,14 +111,14 @@ export default {
         url: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
         endpoints: {
           login: { url: '/login', method: 'post' },
-          logout: { url: '/logout', method: 'post' },
+          logout: { url: '/', method: 'post' },
           user: { url: '/user', method: 'get' }
         }
       }
     },
     redirect:{
       login: '/login',
-      logout: '/logout',
+      logout: '/',
       home: '/' // Редирект после успешной авторизации
     }
   },

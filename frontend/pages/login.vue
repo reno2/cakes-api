@@ -1,19 +1,27 @@
 <template>
   <div class="container">
+    <button @click="click3">Html 3</button>
       <LoginForm />
+
   </div>
 
 
 </template>
 <script>
 import LoginForm from "../components/forms/LoginForm";
-
+import ModalBus from "@/helpers/ModalBus";
+import AskForm from "@/components/forms/AskForm";
 export default {
   middleware: 'auth',
   auth : 'guest',
   layout: 'LayoutDefault',
-  components: {LoginForm},
+  components: {LoginForm, AskForm},
   methods:{
+    click3(){
+      // ModalBus.$emit('html', {html: '<h2></h2>', title: 'Задать вопрос\n'});
+      ModalBus.$emit('open', {component: AskForm});
+      //this.$modals.$emit('new');
+    },
      async login(){
        //const post = await this.$axios.$get('/csrf-cookie');
        try {

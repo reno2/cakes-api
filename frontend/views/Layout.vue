@@ -12,7 +12,6 @@
     <footer class="page-footer">
       <slot name="page-footer"/>
     </footer>
-
   </div>
 </template>
 

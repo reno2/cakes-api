@@ -53,6 +53,10 @@ export default {
     menuHide({target}) {
       const menu = target.querySelector('.js_profile-auth__menu')
       menu.classList.remove('show')
+    },
+    logout(){
+      this.$auth.logout()
+      this.$router.push('/')
     }
   }
 }

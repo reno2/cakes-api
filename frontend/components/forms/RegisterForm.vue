@@ -5,7 +5,7 @@
       <svg-icon name="reg"/>
     </div>
     <div class="form-container__form">
-      <FormBase form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
+      <FormBase class="inline-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
         <template v-slot:form-header>
           <div class="block-title">
             <div class="block-title__sub">Присоеденяйтесь к нам</div>
