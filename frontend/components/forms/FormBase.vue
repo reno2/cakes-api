@@ -31,6 +31,7 @@ const loadComponent = function (component) {
 };
 const COMPONENTS = [
   {name: 'InputBase', type: 'text'},
+  {name: 'HiddenBase', type: 'hidden'},
   {name: 'TextareaBase', type: 'textarea'},
 ];
 export default {

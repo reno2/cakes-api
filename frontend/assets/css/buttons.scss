@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   border: unset;
+  cursor: pointer;
 }
 
 // region Sizes
@@ -95,6 +96,7 @@
 .btn-grey{
   background: #f6f6f6;
   color: #2e2e33;
+  border: unset;
   span{
     color: #2e2e33;
   }

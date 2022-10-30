@@ -19,7 +19,7 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function store(Request $request) {
+    public function register(Request $request) {
         $creds = $request->validate([
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed',

@@ -10,14 +10,16 @@ export default {
       props: null,
       closeOnClick: true,
       html: "",
-      modal: null
+      modal: null,
+      hidden: null
     };
   },
   created() {
     ModalBus.$on("close", () => {
       this.modal = null;
     });
-    ModalBus.$on("open", ({ component }) => {
+    ModalBus.$on("open.component", ({ component, hidden = null}) => {
+      this.hidden = hidden
       if (typeof component === "object") {
         this.component = component;
         this.modal = "component";
@@ -27,7 +29,7 @@ export default {
       this.modal = "component";
     });
 
-    ModalBus.$on("html", ({ html, title = "" }) => {
+    ModalBus.$on("open.html", ({ html, title = "" }) => {
       this.modal = "html";
       this.html = html;
       this.title = title;
@@ -44,13 +46,19 @@ export default {
         }
       });
     } else {
-      component = h(this.component);
+      component = h(this.component, {
+        props: {
+          hidden: this.hidden
+        }
+      });
     }
 
     const modalData = h(
       HtmlBlock,
       {
-        props: { title: this.title }
+        props: {
+          title: this.title
+        }
       },
       [component]
     );

@@ -1,16 +1,28 @@
 <?php
 
 namespace App\Models;
-
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Room;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    use HasFactory;
     protected $guarded = [];
 
-    public function posts (){
-        return $this->belongsToMany(Post::class);
+    public function users(){
+        return $this->belongsTo("App\Models\User", 'user_id', 'id');
+    }
+
+    public function children() {
+        return $this->hasMany(self::class, 'parent_id');
+    }
+
+    public function articles(){
+        return $this->belongsTo(Article::class, 'article_id', 'id');
+    }
+
+
+    // Связь с пользователем
+    public function rooms() {
+        return $this->belongsTo(Room::class, 'comment_id');
     }
 }

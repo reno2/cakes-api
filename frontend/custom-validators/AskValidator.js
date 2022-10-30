@@ -4,7 +4,7 @@ import BaseValidator from './BaseValidator'
 export default class LoginValidator extends BaseValidator{
 
   rules = {
-    ask: 'ruleRequire,ruleEnAlphaDashValidator',
+    question: 'ruleRequire,ruleEnAlphaDashValidator',
   }
 
   messages  = {

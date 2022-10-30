@@ -23,6 +23,7 @@ export default {
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
+    '@/assets/scss/common',
     '@/assets/css/main.css',
     '@/assets/css/buttons',
     '@/assets/scss/animations',
@@ -40,6 +41,10 @@ export default {
     },
     {
       src: '~/plugins/repositories.js',
+      ssr: true
+    },
+    {
+      src: '~/plugins/modal.js',
       ssr: true
     }
   ],

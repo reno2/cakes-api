@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\PostController;
 use App\Http\Controllers\Api\V1\MenusController;
 use App\Http\Controllers\Api\V1\AuthController;
-
+use App\Http\Controllers\Api\V1\profile\CommentController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -37,6 +37,7 @@ Route::group(['prefix'=>'v1'], function() {
 //    ]);
 
   Route::get('/user', [AuthController::class, 'me'])->middleware(['auth.role']);
+  Route::post('/user1', [AuthController::class, 'me'])->middleware(['auth.role']);
 //
 //    Route::get('/test', function(){
 //        $user = User::find(1);
@@ -49,29 +50,37 @@ Route::group(['prefix'=>'v1'], function() {
     //Route::post('/posts', [ArticleController::class, 'store']);
 
     //Route::get('/posts', [FrontController::class, 'index'])->name('main');
-    Route::get('/posts', [FrontController::class, 'index'])->name('main');
+
+
+
 //    Route::get('/img', function(){
 //        dd( Storage::url('/images/hero/hero_bg.png'));
 //        //Storage::disk('public')->put('text.txt', 'hi');
 //    });
 
 
+
+    // Публичные ройты
+    Route::get('/posts', [FrontController::class, 'index'])->name('main');
     Route::get('/menu', [MenusController::class, 'frontMenu'])->name('frontMenu');
 
-    Route::group(['middleware' => 'auth.role:admin'], function() {
+    // Пользователь авторизован
+    Route::group(['prefix' => 'profile', 'namespace' => 'profile', 'middleware' => ['auth.role']], function() {
+
+        // Выйти
+        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+        Route::get('/user', [AuthController::class, 'me'])->middleware(['auth.role']);
 
         // Роут создания объявления
-        Route::post('article', [ArticleController::class, 'store']);
+        Route::post('/article', [ArticleController::class, 'store']);
 
-       // Route::get('user', [AuthController::class, 'me'])->name('user');
-        Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+        // Создание коммента
+        Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');
     });
 
-   Route::post('register', [AuthController::class, 'store'])->name('store');
-
-
-
-    Route::post('login', [AuthController::class, 'newLogin'])->name('login');
+    // создаём пользователя
+   Route::post('register', [AuthController::class, 'register'])->name('store');
+   Route::post('login', [AuthController::class, 'newLogin'])->name('login');
 
 
     Route::get('check', [AuthController::class, 'checkRoles'])->middleware(['auth:sanctum', 'ability:server-updateww']);

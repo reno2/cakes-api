@@ -1,16 +1,5 @@
 <template>
-
-  <div class="form-cell" :class="renderClasses()">
-    <label class="form-cell__label js_label">{{ label }} </label>
-    <input ref="input" class="form-cell__input js_input"  v-model="model" v-on="listeners">
-    <svg v-if="model" class="form-cell__clean js_clean" @click="cleanInput">
-      <use xlink:href="~/assets/icons/icons.svg#icon-close"></use>
-    </svg>
-    <div class="form-cell__errors" v-if="errors">
-      <div v-for="error in errors" class="form-cell__error">{{error}}</div>
-    </div>
-  </div>
-
+    <input ref="input" class="form-cell__input js_input" type="hidden" :name="name" :class="renderClasses()" v-model="model" v-on="listeners">
 </template>
 
 <script>
@@ -39,7 +28,7 @@ export default {
       required: true,
     },
     value: {
-      type: String,
+      type: String|Number,
     }
   },
   watch: {
@@ -89,6 +78,8 @@ export default {
 
       for(let rule in this.rules ){
         const ruleFunc = this.rules[rule].rule
+        console.log(this[ruleFunc](this.model))
+        // /console.log(ruleFunc.call(null, this.model))
       }
       return false
     }

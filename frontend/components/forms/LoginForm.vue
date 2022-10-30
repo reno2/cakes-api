@@ -33,11 +33,13 @@ export default {
           type: 'text',
           name: 'email',
           label: 'Ваш email',
+          value: null
         },
         {
           type: 'text',
           name: 'password',
           label: 'Ваш пароль',
+          value: null
         },
       ]
     }

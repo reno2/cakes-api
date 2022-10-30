@@ -18,7 +18,7 @@ class ArticleFactory extends Factory
             'published'=> 1,
             'sort' => 100,
             'slug'=> $this->faker->name,
-            'user_id' => 1,
+            'user_id' => 5,
             'description' => $this->faker->text,
             'price' => 17,
             'deal_address' => $this->faker->words(2, true),

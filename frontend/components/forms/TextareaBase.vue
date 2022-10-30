@@ -8,7 +8,7 @@
       <use xlink:href="~/assets/icons/icons.svg#icon-close"></use>
     </svg>
 
-    <transition tag="div" name="slide-fade" class="form-cell__errors" v-if="errors">
+    <transition tag="div" name="slide" class="form-cell__errors" v-if="errors">
 
         <div v-for="error in errors" :key="error" class="form-cell__error">{{ error }}</div>
 
@@ -175,8 +175,9 @@ export default {
 }
 
 .form-cell__error {
-  font-size: 12px;
+  font-size: 10px;
   color: tomato;
+  text-align: left;
 }
 
 

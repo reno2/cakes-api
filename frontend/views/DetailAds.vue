@@ -1,6 +1,6 @@
 <template>
   <div class="ad">
-    <div class="ad__head">
+    <nuxt-link :to="path('ads', card.id)" class="ad__head">
       <div class="ad__mobile">
         <img class="ad__img" :src="card.image">
       </div>
@@ -13,17 +13,24 @@
           <a class="ad__link" href=""></a>
         </div>
       </div>
-    </div>
+    </nuxt-link>
 
     <div class="ad__body">
-      <div class="ad__info">
+      <a class="ad__info">
         <div class="ad__categories">
-          <nuxt-link class="ad__category" :to="path('category', card.category.slug)">{{ card.category.title }}</nuxt-link>
+          <nuxt-link class="ad__category" :to="path('category', card.category.slug)">{{
+              card.category.title
+            }}
+          </nuxt-link>
         </div>
+
         <h5 class="ad__title">
           <nuxt-link :to="path('ads', card.id)">{{ card.title }}</nuxt-link>
         </h5>
-      </div>
+        <span class="ad__actions" v-if="isAuthenticated && canAsk">
+          <button class="btn btn-small btn-grey" @click.prevent="openModal">Задать вопрос</button>
+        </span>
+      </a>
     </div>
 
   </div>
@@ -32,14 +39,33 @@
 <script>
 
 import {makePath} from '@/helpers/functions';
+import {mapGetters} from 'vuex'
+import AskForm from "@/components/forms/AskForm";
+
 export default {
   props: {
     card: Object
   },
+  components: {AskForm},
   methods: {
     path(type, slug) {
       return makePath(type, slug)
     },
+    openModal() {
+      this.$modalBus.$emit('open.component', {
+        component: AskForm, hidden: {
+          from_user_id: this.loggedInUser.id,
+          article_id: this.card.id,
+          user_id: 20
+        }
+      });
+    },
+    canAsk(){
+      return this.isAuthenticated && this.loggedInUser.id !== this.card.id
+    }
+  },
+  computed: {
+    ...mapGetters(['isAuthenticated', 'loggedInUser'])
   },
   mounted() {
     console.log(this.card)
