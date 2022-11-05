@@ -8,19 +8,20 @@
     </template>
     <template v-slot:page-footer>
       <f-footer />
+      <ModalWrapper/>
     </template>
   </f-layout>
 </template>
 
 <script>
-
+import ModalWrapper from "@/components/ModalWrapper";
 import FHeader from '@/components/Header';
 import FLayout from '@/views/Layout';
 import FFooter from '@/views/Footer';
 export default {
   name: 'LayoutDefault',
   components: {
-    FHeader, FLayout, FFooter
+    FHeader, FLayout, FFooter, ModalWrapper
   },
   async middleware({store, $apitest}) {
     await store.dispatch('menus/fetchMenu', $apitest)

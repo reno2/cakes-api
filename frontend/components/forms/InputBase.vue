@@ -89,8 +89,6 @@ export default {
 
       for(let rule in this.rules ){
         const ruleFunc = this.rules[rule].rule
-        console.log(this[ruleFunc](this.model))
-        // /console.log(ruleFunc.call(null, this.model))
       }
       return false
     }

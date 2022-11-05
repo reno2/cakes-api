@@ -16,7 +16,7 @@
           />
         </template>
         <slot></slot>
-        <button class="btn-big btn-main">Войти</button>
+        <button class="btn-big btn-main">{{actionValue}}</button>
       </form>
     </div>
 
@@ -31,12 +31,18 @@ const loadComponent = function (component) {
 };
 const COMPONENTS = [
   {name: 'InputBase', type: 'text'},
+  {name: 'HiddenBase', type: 'hidden'},
+  {name: 'TextareaBase', type: 'textarea'},
 ];
 export default {
   props: {
     formType: null,
     fields: [],
-    Validator: Function
+    Validator: Function,
+    actionValue: {
+      default: 'Отправить',
+      type: String
+    }
   },
   data() {
     return {
@@ -46,10 +52,10 @@ export default {
   },
   methods: {
     mainHandler() {
-      this.$emit('submit', this.formData)
-      // if (this.validateForm()) {
-      //   this.$emit('submit', this.formData)
-      // }
+      //this.$emit('submit', this.formData)
+      if (this.validateForm()) {
+        this.$emit('submit', this.formData)
+      }
     },
     validateForm() {
       if (!this.$children) return
@@ -120,15 +126,6 @@ export default {
 <style>
 .form-base.min_width{
   min-width: 450px;
-}
-.form-base__content {
-  display: flex;
-  margin: 0 auto;
-  background: #FFFFFF;
-  box-shadow: 0 40px 60px 0 rgb(37 59 112 / 10%);
-  border-radius: 9px;
-  padding: 80px 40px 24px;
-  flex-direction: column;
 }
 
 .form-base__form {

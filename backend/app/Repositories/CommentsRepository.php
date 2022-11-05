@@ -13,7 +13,7 @@ use App\Models\Comment as Model;
 
 use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\Models\Media;
-use App\Models\Profile;
+
 use App\Models\User;
 use App\Models\Room;
 use Illuminate\Database\Eloquent\Builder;
@@ -226,12 +226,18 @@ class CommentsRepository extends CoreRepository
         try {
 
             // Получаем id автора
-            $adsAuthor = \DB::table('articles')
+            $adsAuthor = \DB::table('posts')
                             ->select('user_id')
                             ->where('id', $request['article_id'])
                             ->first();
-
+            return $adsAuthor;
             // Определяем владельца
+            function helper_comment_owner_asked ($article_owner, $user_to, $user_from) {
+                $relations = [];
+                $relations['owner'] = ($article_owner === (int)$user_to) ? $user_to : $user_from;
+                $relations['asking'] = ($relations['owner'] === (int)$user_from) ? $user_to : $user_from;
+                return $relations;
+            }
             $commentOwner = helper_comment_owner_asked($adsAuthor->user_id, $request['user_id'], $request['from_user_id']);
 
             // Проверяем есть ли комната если нет, то подготавливаем модель

@@ -45,3 +45,49 @@ a:hover {
   color: #419bbf;
   text-decoration: none;
 }
+
+
+.section {
+  margin-bottom: 64px;
+}
+.section__collections {
+  min-width: 0;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+
+/* region titles */
+h5,
+.h5 {
+  font-size: 18px;
+  margin: 0;
+}
+/* endregion titles */
+
+/* region base form */
+.inline-form {
+  display: flex;
+  margin: 0 auto;
+  background: #FFFFFF;
+  border-radius: 9px;
+  padding: 80px 40px 24px;
+  flex-direction: column;
+  box-shadow: 0 40px 60px 0 rgb(37 59 112 / 10%);
+}
+.form-base.form-base_shadow{
+
+}
+/* endregion base form */
+
+
+.DOM-slider-hidden {
+  height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-top-width: 0 !important;
+  border-bottom-width: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  overflow: hidden !important;
+}

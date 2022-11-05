@@ -17,7 +17,7 @@
 <script>
 const loadComponent = function (component) {
   return async () =>
-    await import(/* webpackChunkName: "components" */ `@/components/${component}`);
+    await import(/* webpackChunkName: "components" */ `@/views/${component}`);
 };
 const COMPONENTS = [
   {name: 'SectionFrontAds', type: 'ads-front'},

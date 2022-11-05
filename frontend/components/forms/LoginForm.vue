@@ -1,7 +1,7 @@
 <template>
 
 
-    <FormBase class="login-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
+    <FormBase class="login-form inline-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
       <template v-slot:form-header>
         <div class="block-title">
           <div class="block-title__name">Авторизация</div>
@@ -33,11 +33,13 @@ export default {
           type: 'text',
           name: 'email',
           label: 'Ваш email',
+          value: null
         },
         {
           type: 'text',
           name: 'password',
           label: 'Ваш пароль',
+          value: null
         },
       ]
     }
