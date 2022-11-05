@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  layout: 'LayoutDefault',
+  layout: 'profile',
   middleware: 'profile',
   data() {
     return {

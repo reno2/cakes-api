@@ -49,8 +49,8 @@ export default {
       try{
         const log = await this.$auth.loginWith('local', {
           data: {
-            email: 'chedia@mail.ru',
-            password: '123456'
+            email: data.email,
+            password: data.password
           }
         })
         console.log(log)

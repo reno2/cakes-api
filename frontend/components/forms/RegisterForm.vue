@@ -74,7 +74,7 @@ export default {
           }
           )
         console.log(res)
-          this.$router.push({path: '/login'});
+          await this.$router.push({path: '/login'});
 
 
         //})

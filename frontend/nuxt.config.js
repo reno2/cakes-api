@@ -125,7 +125,7 @@ export default {
      proxy: true
   },
   proxy: {
-    '/api/v1/': 'http://localhost:8003',
+    '/api/v1/': process.env.BACKEND_PRIVATE_URL,
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
