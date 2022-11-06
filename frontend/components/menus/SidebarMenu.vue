@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-menu">
     <div class="sidebar-menu__ul">
-      <nuxt-link class="sidebar-menu__link btn wide btn-middle btn-grey btn-square" v-for="item in menu" :to="item.action">
+      <nuxt-link class="sidebar-menu__link btn wide btn-middle btn-grey btn-square" v-for="(item, idx) in menu" :key="idx" :to="item.action">
         <div class="sidebar-menu__title">{{item.name}}</div>
       </nuxt-link>
     </div>

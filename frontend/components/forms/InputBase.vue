@@ -6,9 +6,11 @@
     <svg v-if="model" class="form-cell__clean js_clean" @click="cleanInput">
       <use xlink:href="~/assets/icons/icons.svg#icon-close"></use>
     </svg>
-    <div class="form-cell__errors" v-if="errors">
-      <div v-for="error in errors" class="form-cell__error">{{error}}</div>
-    </div>
+
+    <transition-group tag="div" name="slide" class="form-cell__errors" v-if="errors">
+      <div v-for="error in errors" :key="error" class="form-cell__error">{{ error }}</div>
+    </transition-group>
+
   </div>
 
 </template>
@@ -89,6 +91,7 @@ export default {
 
       for(let rule in this.rules ){
         const ruleFunc = this.rules[rule].rule
+        this[ruleFunc](this.model)
       }
       return false
     }
@@ -148,6 +151,7 @@ export default {
   padding-left: 16px;
   padding-right: 24px;
   outline: unset;
+  color: #6A747B;
 }
 
 .form-cell__clean {
@@ -157,10 +161,9 @@ export default {
   opacity: 0.54;
   cursor: pointer;
   position: absolute;
-  top: 15px;
-  /*top: 50%;*/
-  /*transform: translateY(-50%);*/
-  right: 10px;
+  transform: translateY(-50%);
+  top: 50%;
+  right: 16px;
 }
 
 .form-cell__errors{

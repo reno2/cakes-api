@@ -1,17 +1,18 @@
 <template>
 
-  <div class="form-cell element__textarea" :class="renderClasses()">
-    <label class="form-cell__label js_label">{{ label }} </label>
-    <textarea ref="input" class="form-cell__textarea js_input" cols="60" rows="6" v-model="model"
-              v-on="listeners"></textarea>
-    <svg v-if="model" class="form-cell__clean js_clean" @click="cleanInput">
-      <use xlink:href="~/assets/icons/icons.svg#icon-close"></use>
-    </svg>
+  <div class="form-cell form-cell__checkbox element-checkbox" @click="change" :class="renderClasses()">
+    <div class="element-checkbox__values">
+      <div class="form-cell__icons">
+        <svg-icon v-if="model" class="element-checkbox__icon element-checkbox__checked" name="icon-checked"/>
+        <svg-icon v-else class="element-checkbox__icon element-checkbox_unchecked" name="icon-unchecked"/>
+      </div>
+
+      <label class="element-checkbox__label js_label">{{ label }} </label>
+      <input class="element-checkbox__input js_input" type="checkbox" v-model="model" v-on="listeners">
+    </div>
 
     <transition-group tag="div" name="slide" class="form-cell__errors" v-if="errors">
-
-        <div v-for="error in errors" :key="error" class="form-cell__error">{{ error }}</div>
-
+      <div v-for="error in errors" :key="error" class="form-cell__error">{{ error }}</div>
     </transition-group>
 
   </div>
@@ -19,11 +20,9 @@
 </template>
 
 <script>
-import {checkRequired} from "@/helpers/functions"
-
 export default {
   inheritAttrs: false,
-  name: 'InputBase',
+  name: 'CheckboxBase',
   data() {
     return {
       errors: [],
@@ -79,6 +78,12 @@ export default {
 
   },
   methods: {
+    change() {
+      this.model = !this.model
+      if(this.model){
+        this.errors = []
+      }
+    },
     renderClasses() {
       return this.classArray.join(' ')
     },
@@ -95,17 +100,13 @@ export default {
 
       for (let rule in this.rules) {
         const ruleFunc = this.rules[rule].rule
-        console.log(this[ruleFunc](this.model))
-        // /console.log(ruleFunc.call(null, this.model))
+        this[ruleFunc](this.model)
       }
       return false
     }
   },
   mounted() {
     this.model = this.value;
-    if (this.type === 'hidden' && this.value) {
-      this.$emit('input-change', this.model);
-    }
   }
 }
 </script>
@@ -114,58 +115,38 @@ export default {
 .form-cell {
   margin-bottom: 16px;
   position: relative;
-  width: 100%;
 }
 
-.form-cell__label {
-  position: absolute;
-  pointer-events: none;
-  left: 16px;
-  top: 11px;
+.element-checkbox {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.element-checkbox__values{
+  display: flex;
+  align-items: center;
+}
+.element-checkbox__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.element-checkbox__label {
+  position: static;
   -webkit-transition: .2s ease all;
   -o-transition: .2s ease all;
   transition: .2s ease all;
   background-color: #fff;
-  padding: 0 5px;
+  padding: 0 8px;
   line-height: 19px;
   font-size: 14px;
   letter-spacing: 0.02em;
   color: #6A747B;
 }
 
-.form-cell.onFocus .form-cell__label,
-.form-cell.filled .form-cell__label {
-  top: -8px;
-  left: 16px !important;
-  border-radius: 8px;
-  color: #D3A1DF;
-}
-
-.form-cell.onFocus .form-cell__textarea,
-.form-cell.filled .form-cell__textarea {
-  border: 1px solid #D3A1DF;
-}
-
-.form-cell__textarea {
-  background: unset;
-  outline: none;
-  box-sizing: border-box;
-  border: unset;
-  padding: 16px 32px 0 16px;
-  border: 1px solid #e1f0ff;
-  border-radius: 8px;
-  width: 100%;
-}
-
-.element__textarea .form-cell__clean {
-  width: 18px;
-  height: 18px;
-  fill: #1D2F3C;
-  opacity: 0.54;
-  cursor: pointer;
+.element-checkbox__input {
   position: absolute;
-  top: 15px;
-  right: 10px;
+  visibility: hidden;
 }
 
 .form-cell__errors {
@@ -173,10 +154,11 @@ export default {
 }
 
 .form-cell__error {
-  font-size: 10px;
+  font-size: 12px;
   color: tomato;
-  text-align: left;
 }
 
-
+.form-cell__error:not(:last-child) {
+  margin-bottom: 2px;
+}
 </style>

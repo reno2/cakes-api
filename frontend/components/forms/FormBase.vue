@@ -31,8 +31,10 @@ const loadComponent = function (component) {
 };
 const COMPONENTS = [
   {name: 'InputBase', type: 'text'},
+  {name: 'SelectBase', type: 'select'},
   {name: 'HiddenBase', type: 'hidden'},
   {name: 'TextareaBase', type: 'textarea'},
+  {name: 'CheckboxBase', type: 'checkbox'},
 ];
 export default {
   props: {

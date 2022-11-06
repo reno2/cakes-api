@@ -12,8 +12,6 @@
 </template>
 <script>
 import LoginForm from "../components/forms/LoginForm";
-import {slideDown} from "/helpers/toggle";
-//import ModalBus from "@/helpers/ModalBus";
 import AskForm from "@/components/forms/AskForm";
 export default {
   middleware: 'auth',

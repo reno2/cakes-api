@@ -54,3 +54,33 @@
   max-height: 0;
 }
 /* endregion Toggle Slide Animation */
+
+
+.list-complete-enter {
+  transform: translateY(10%);
+  opacity: 0;
+}
+
+.list-complete-enter-to {
+  transform: translateY(0);
+  opacity: 1;
+}
+.list-complete-leave{
+  transform: translateY(0);
+  opacity: 1;
+}
+.list-complete-leave-to {
+  transform: translateY(10%);
+  opacity: 0;
+}
+.list-complete-enter-active,
+.list-complete-leave-active {
+  -moz-transition-duration: 0.4s;
+  -webkit-transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+  transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+}

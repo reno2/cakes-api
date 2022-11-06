@@ -141,27 +141,4 @@ export default {
   outline: unset;
 }
 
-.form-cell__clean {
-  width: 18px;
-  height: 18px;
-  fill: #1D2F3C;
-  opacity: 0.54;
-  cursor: pointer;
-  position: absolute;
-  top: 15px;
-  /*top: 50%;*/
-  /*transform: translateY(-50%);*/
-  right: 10px;
-}
-
-.form-cell__errors{
-  margin-top: 4px;
-}
-.form-cell__error {
-  font-size: 12px;
-  color: tomato;
-}
-.form-cell__error:not(:last-child){
-  margin-bottom: 2px;
-}
 </style>

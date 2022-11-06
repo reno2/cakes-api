@@ -1,10 +1,13 @@
 export const state = () => ({
-  menu: []
+  menu: [],
+  menuAll: []
 })
 
 export const mutations = {
   SET_MENU(state, menu) {
     if (!menu.length) return
+
+    state.menuAll = menu
 
     const max = 4;
     state.menu = menu.reduce((accumulator, currentValue, index, array) => {
@@ -30,6 +33,7 @@ export const mutations = {
 
 export const getters = {
   getMenus: (state) => state.menu,
+  getMenusAll: (state) => state.menuAll,
 }
 
 
