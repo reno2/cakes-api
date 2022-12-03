@@ -1,7 +1,7 @@
 <template>
 
 
-    <FormBase class="login-form inline-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
+    <FormBase class="login-form inline-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm" view="col">
       <template v-slot:form-header>
         <div class="block-title">
           <div class="block-title__name">Авторизация</div>

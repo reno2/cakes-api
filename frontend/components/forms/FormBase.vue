@@ -7,16 +7,46 @@
       <div class="form-base__header">
         <slot name="form-header"/>
       </div>
-      <form class="form-base__form" action="" @submit.prevent="mainHandler">
-        <template v-for="(field, index) in parsedComponents">
-          <component :is="field.compFunc"
-                     v-bind="field"
-                     @input-change="changeValue(field.name, $event)"
-                     @input="changeValue(field.name, $event)"
-          />
+      <form class="form-base__form" :class="view" action="" @submit.prevent.self="mainHandler">
+
+        <template v-if="view === 'col'">
+
+          <template v-for="(field, index) in parsedComponents.center">
+            <component :is="field.compFunc"
+                       v-bind="field"
+                       @input-change="changeValue(field.name, $event)"
+                       @input="changeValue(field.name, $event)"
+            />
+          </template>
+
         </template>
+
+        <template v-else>
+          <div class="form-base__cols" :class="view">
+            <div class="form-base__left">
+              <template v-for="(field, index) in parsedComponents.left">
+                <component :is="field.compFunc"
+                           v-bind="field"
+                           @input-change="changeValue(field.name, $event)"
+                           @input="changeValue(field.name, $event)"
+                />
+
+              </template>
+            </div>
+            <div class="form-base__right">
+              <template v-for="(field, index) in parsedComponents.right">
+                <component :is="field.compFunc"
+                           v-bind="field"
+                           @input-change="changeValue(field.name, $event)"
+                           @input="changeValue(field.name, $event)"
+                />
+              </template>
+            </div>
+          </div>
+        </template>
+
         <slot></slot>
-        <button class="btn-big btn-main">{{actionValue}}</button>
+        <button class="btn-big btn-main">{{ actionValue }}</button>
       </form>
     </div>
 
@@ -35,9 +65,11 @@ const COMPONENTS = [
   {name: 'HiddenBase', type: 'hidden'},
   {name: 'TextareaBase', type: 'textarea'},
   {name: 'CheckboxBase', type: 'checkbox'},
+  {name: 'FileBase', type: 'file'},
 ];
 export default {
   props: {
+    view: null,
     formType: null,
     fields: [],
     Validator: Function,
@@ -54,37 +86,37 @@ export default {
   },
   methods: {
     mainHandler() {
-      //this.$emit('submit', this.formData)
       if (this.validateForm()) {
         this.$emit('submit', this.formData)
       }
     },
     validateForm() {
+
       if (!this.$children) return
 
+      // Инициализируем начальное состояние
       let isErrors = true
 
+      // Сохраняем для использования в дочернем компоненте как переменную
+      const ValidateClass = this.ValidateClass
+
       this.$children.forEach(child => {
-        child.errors = []
+         const validateRules =  ValidateClass.rules[child._props.name] ?? false
+         if(!validateRules) return
 
-        const inputName = child._props.name
+        const validateParams = {
+          model: child.model,
+          validateClass: ValidateClass,
+          validateInputName: child._props.name,
+          rules: validateRules
+        }
 
-        if(!this.ValidateClass.rules[inputName]) return
+         isErrors = ValidateClass.validateAdapter(child, validateParams)
 
-        const rules = (this.ValidateClass.rules[inputName]).split(',')
-
-        rules.forEach(rule => {
-
-          if (!this.ValidateClass[rule](child.model)) {
-            if (isErrors) isErrors = !isErrors
-
-            child.errors.push(this.ValidateClass.messages[rule])
-          }
-        })
       })
-
       return isErrors
     },
+
     changeValue(name, event) {
 
       this.$set(this.formData, name, event)
@@ -97,8 +129,9 @@ export default {
 
       return this.fields ? this.fields.reduce((components, component, index, array) => {
 
-          // Получаем названиекомпонента
-          const {type} = component || {};
+          // Получаем название компонента
+          const {type, pos = 'center'} = component || {};
+
 
           // Мэпим нахвание для динамической загрузки компонента
           const {name: componentName} =
@@ -112,11 +145,19 @@ export default {
             componentName: componentName,
             compFunc: loadComponent(componentName)
           };
-          return [...components, componentMapped]
 
-        }, [])
+          if (!components[pos]) {
+            components[pos] = []
+          }
+
+          components[pos].push(componentMapped)
+
+          return {...components, componentMapped}
+
+        }, {})
 
         : []
+
     }
   },
   mounted() {
@@ -126,11 +167,26 @@ export default {
 </script>
 
 <style>
-.form-base.min_width{
+.form-base.min_width {
   min-width: 450px;
 }
 
 .form-base__form {
   width: 100%;
 }
+
+.form-base__cols {
+  display: flex;
+}
+
+.form-base__cols.third .form-base__left {
+  width: calc(70% - 8px);
+  margin-right: 16px;
+}
+
+.form-base__cols.third .form-base__right {
+  width: calc(30% - 8px);
+}
+
+
 </style>

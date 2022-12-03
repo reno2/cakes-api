@@ -2,7 +2,7 @@
 
   <div class="form-cell" :class="renderClasses()">
     <label class="form-cell__label js_label">{{ label }} </label>
-    <input ref="input" class="form-cell__input js_input"  v-model="model" v-on="listeners">
+    <input ref="input" class="form-cell__input js_input"  v-model="model" v-on="listeners" :name="name">
     <svg v-if="model" class="form-cell__clean js_clean" @click="cleanInput">
       <use xlink:href="~/assets/icons/icons.svg#icon-close"></use>
     </svg>

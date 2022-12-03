@@ -24,7 +24,7 @@ export default {
 
 }
 .ad-create__content{
-  max-width: 660px;
+  /*max-width: 660px;*/
 
 }
 </style>

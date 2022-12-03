@@ -12,13 +12,15 @@ export default ({$axios, store, redirect, $cookies, error: nuxtError, app}, inje
     },
   })
 
-  api.onError(error => {
-    nuxtError({
-      statusCode: error.response.status,
-      message: error.message,
-    });
-    return Promise.resolve(false);
-  })
+  // Обработка глобальной ошибки, ошибки не будут попадать в обработчик ошибок в месте вызова
+
+  // api.onError(error => {
+  //   nuxtError({
+  //     statusCode: error.response.status,
+  //     message: error.message,
+  //   });
+  //   return Promise.resolve(false);
+  // })
 
 
   api.onResponse((response) => {

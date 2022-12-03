@@ -17,7 +17,7 @@ export default class Repository {
 
   create(payload) {
     try {
-      this.axios.post(`${this.resource}`, payload)
+      return this.axios.post(`${this.resource}`, payload)
     }catch (e){
       console.log(e)
     }

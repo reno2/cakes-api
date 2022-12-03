@@ -78,6 +78,8 @@
   }
   svg{
     fill: #FFFFFF;
+    margin-right: 10px;
+    opacity: 1;
   }
 }
 
@@ -87,6 +89,7 @@
   cursor: pointer;
   span{
     color: #231F20;
+    font-weight: 900;
   }
   svg{
     fill: #231F20;
@@ -99,9 +102,10 @@
   border: unset;
   span{
     color: #2e2e33;
+    font-weight: 900;
   }
   svg{
-    margin-right: 6px;
+    margin-right:8px;
     fill: #2e2e33;
   }
   &:hover{
@@ -115,6 +119,7 @@
   border: 2px solid #ea806f;
   span{
     color: #fff;
+    font-weight: 900;
   }
   &:hover{
     color: #fff;

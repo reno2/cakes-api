@@ -1,5 +1,5 @@
 <template>
-  <FormBase class="ask-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
+  <FormBase class="ask-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm"  view="col">
     <template v-slot:form-header>
       <div class="block-title">
         <div class="block-title__name">Задать вопрос</div>

@@ -100,7 +100,6 @@ class AdsService
     public function chain ($request) {
 
         $extraData = [
-            'user_id' => Auth::id(),
             'moderate' => isset($request['moderate']) ? 1 : 0,
             'sort' => $request['sort'] ?? 100,
         ];

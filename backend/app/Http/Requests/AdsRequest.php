@@ -30,7 +30,7 @@ class AdsRequest extends FormRequest
     }
 
     public function validationData () {
-        return $this->stripTags(['title', 'description'], parent::validationData());
+        return $this->stripTags(['title', 'detail_text'], parent::validationData());
     }
 
     /**
@@ -51,21 +51,21 @@ class AdsRequest extends FormRequest
                 'regex:/^[-а-яА-Я0-9\sa-zA-Z]+$/umi',
                 new FindLinks,
             ],
-            'deal_address' => [
-                'required',
-                'regex:/^[\.а-яА-Я0-9\s\-\,]+$/u',
-                new NotEmail,
-            ],
-            'tags' => 'required',
-            'description' => [
+//            'deal_address' => [
+//                'required',
+//                'regex:/^[\.а-яА-Я0-9\s\-\,]+$/u',
+//                new NotEmail,
+//            ],
+//            'tags' => 'required',
+            'detail_text' => [
                 'required',
                 'max:1000',
                 'regex:/^[\.\,\'\"_а-яёА-Я0-9a-z\s-]+$/umi',
                 new FindLinks,
             ],
             'weight' => 'regex:/^(\d+){0,2}(\.){0,1}(\d){1,3}$/i',
-            'price' => "required|max:10|regex:/^\d+(\.\d{1,2})?$/",
-            'categories' => "required|array|not_in:0",
+         //   'price' => "required|max:10|regex:/^\d+(\.\d{1,2})?$/",
+            //'categories' => "required|array|not_in:0",
             'image' => "max:5",
             'image.*' => "mimes:png,jpg,jpeg|max:20000",
             'meta_description' => 'max:155',
@@ -81,8 +81,8 @@ class AdsRequest extends FormRequest
             'title.required' => ':attribute - Название объязательно',
             'title.max' => ':attribute - Не более 155 символов',
             'title.regex' => ':attribute - Разрешено Буквы цыфры пробел и дефис',
-            'description.required' => 'Поле объязательное',
-            'description.max' => 'Максимальное количество 400 символов',
+            'detail_text.required' => 'Поле объязательное',
+            'detail_text.max' => 'Максимальное количество 400 символов',
             'categories.not_in' => ':attribute - Выбор категории объязателен',
             'price.required' => 'Поле цена объязательно',
             'price.regex' => 'Не верный формат',

@@ -4,7 +4,7 @@
 
     <div class="element-select__label">
 
-      <button class="element-select__name">{{ label }}</button>
+      <button @click.prevent class="element-select__name">{{ label }}</button>
       <label class="element-select__selected" v-if="model">{{ text }}</label>
       <div class="element-select__icons js_select__icons" ref="icons">
         <svg-icon v-if="model" ref="close" class="element-select__icon element-select__close js_close"
@@ -107,6 +107,13 @@ export default {
       if (!this.isOpen) {
         this.classes.onFocus = true
         this.isOpen = true
+
+        const customEvent = new CustomEvent('open:select', {
+          detail: {
+            id: this._uid
+          }
+        });
+        window.dispatchEvent(customEvent);
       }
 
     },
@@ -121,25 +128,24 @@ export default {
       this.isOpen = false
       this.model = target.dataset.value
       this.text = target.innerHTML
-      this.$emit('input-change', target.value);
+
+      //this.$emit('input-change',  this.model);
       this.classes.filled = true
       this.classes.onFocus = false
       this.errors = []
     },
 
-    doValidate() {
-      for (let rule in this.rules) {
-        const ruleFunc = this.rules[rule].rule
-      }
-      return false
-    }
 
   },
   mounted() {
     this.model = this.value;
 
+    window.addEventListener("open:select", ({detail}) => {
+      if(detail.id !== this._uid){
+        this.isOpen = false
+      }
+    })
     window.addEventListener("click", ({target}) => {
-
       if (!this.$refs.select.contains(target)) {
         this.isOpen = false
         this.classes.onFocus = false
