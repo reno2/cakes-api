@@ -6,7 +6,7 @@ export default class CreateAdsValidator extends BaseValidator{
   rules = {
     state: 'ruleRequire',
     title: 'ruleRequire',
-    category: 'ruleRequire',
+    categories: 'ruleRequire',
     detail_text: 'ruleRequire',
     email: 'ruleRequire,ruleIsEmail',
     file: 'ruleRequire,ruleMaxFiles:4,ruleFileSize:500000,ruleType:jpg|png|jpeg'

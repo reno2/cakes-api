@@ -4,16 +4,18 @@ namespace App\Http\Controllers\Api\V1\profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdsRequest;
+use App\Http\Resources\V1\ArticleResource;
 use App\Repositories\AdsRepository;
 use App\Repositories\UserRepository;
 use App\Services\AdsService;
+use App\Traits\ApiResponseTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-
+    use ApiResponseTrait;
 
     protected $adsService;
     protected $adsRepository;
@@ -30,11 +32,27 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $userPosts = [];
+        if($request->user()->id){
+            $where = [
+                ['user_id', $request->user()->id],
+                ['moderate', '=', 1],
+                ['published', '=', 1]
+            ];
+            $userPosts = $this->adsRepository->getByCurrentProfileAdsSortedDesc($where, 'ads');
+
+        }
+       return $this->successResponse(
+           [
+               'articles' => ArticleResource::collection($userPosts)->response()->getData(true)
+            ],
+           'Пост создан', 201);
+
+
     }
 
     /**
@@ -45,18 +63,18 @@ class ArticleController extends Controller
      */
     public function store(AdsRequest $request)
     {
-        $inputs = $request->all();
-        return new JsonResponse(
-            [
-                'errors' => 'error'
-            ], 422
-        );
 
-//        try{
-//
-//        }catch (\Exception $e){
-//            return back()->withErrors( $e->getMessage())->withInput();
-//        }
+
+        $inputs = $request->all();
+
+
+
+        try{
+            $this->adsService->chain($inputs);
+            $this->successResponse([], 'Пост создан', 201);
+        }catch (\Exception $e){
+            $this->errorResponse( $e->getMessage(), 401);
+        }
 //
 //        return response()->json(
 //            [

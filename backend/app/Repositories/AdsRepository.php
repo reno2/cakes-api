@@ -163,13 +163,15 @@ class AdsRepository extends CoreRepository
         return $this->startCondition()->orderBy('created_at', 'desc')->paginate($per);
     }
 
-    public function setRelationAttrs (array $values, $ads) {
+    public function setRelationAttrs (array $values, $ads): bool
+    {
         $ads->filterGroups()->attach(array_keys($values));
         $ads->filterValues()->attach($values);
         return true;
     }
 
-    public function setRelationCategories (array $values, $ads) {
+    public function setRelationCategories ( $values, $ads): bool
+    {
         $ads->categories()->attach($values);
         return true;
     }

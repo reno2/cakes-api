@@ -28,6 +28,7 @@ export default {
           name: 'user_id',
           value: this.$auth.user.id,
           pos: 'left',
+          label: '',
         },
         {
           pos: 'left',
@@ -36,60 +37,60 @@ export default {
           label: 'Название',
           value: null
         },
-        // {
-        //   pos: 'right',
-        //   type: 'file',
-        //   name: 'file',
-        //   rules: 'ruleMaxFiles:4,ruleFileSize:500000,ruleType:jpg|png|jpeg',
-        //   label: 'Загрузите свои изображени <br> не более 5 файлов. (jpeg, png)',
-        // },
-        // {
-        //   pos: 'left',
-        //   type: 'select',
-        //   name: 'state',
-        //   label: 'Статус',
-        //   value: null,
-        //   options: [
-        //     {value: 0, title: 'Опубликованно'},
-        //     {value: 1, title: 'Не опубликованно'}
-        //   ]
-        // },
-        // {
-        //   pos: 'left',
-        //   type: 'select',
-        //   name: 'category',
-        //   label: 'Выбирете категорию',
-        //   value: null,
-        //   options: []
-        // },
-        // {
-        //   pos: 'left',
-        //   type: 'checkbox',
-        //   name: 'delivery',
-        //   label: 'Возможно доставка',
-        //   value: null
-        // },
-        // {
-        //   pos: 'left',
-        //   type: 'text',
-        //   name: 'price_agreement',
-        //   label: 'Цена по договорённости',
-        //   value: null
-        // },
-        // {
-        //   pos: 'left',
-        //   type: 'text',
-        //   name: 'price',
-        //   label: 'Цена',
-        //   value: null
-        // },
-        // {
-        //   pos: 'left',
-        //   type: 'text',
-        //   name: 'weight',
-        //   label: 'Вес г.',
-        //   value: null
-        // },
+        {
+          pos: 'right',
+          type: 'file',
+          name: 'file',
+          rules: 'ruleMaxFiles:4,ruleFileSize:500000,ruleType:jpg|png|jpeg',
+          label: 'Загрузите свои изображени <br> не более 5 файлов. (jpeg, png)',
+        },
+        {
+          pos: 'left',
+          type: 'select',
+          name: 'state',
+          label: 'Статус',
+          value: null,
+          options: [
+            {value: 0, title: 'Опубликованно'},
+            {value: 1, title: 'Не опубликованно'}
+          ]
+        },
+        {
+          pos: 'left',
+          type: 'select',
+          name: 'categories',
+          label: 'Выбирете категорию',
+          value: null,
+          options: []
+        },
+        {
+          pos: 'left',
+          type: 'checkbox',
+          name: 'delivery',
+          label: 'Возможно доставка',
+          value: null
+        },
+        {
+          pos: 'left',
+          type: 'text',
+          name: 'price_agreement',
+          label: 'Цена по договорённости',
+          value: null
+        },
+        {
+          pos: 'left',
+          type: 'text',
+          name: 'price',
+          label: 'Цена',
+          value: null
+        },
+        {
+          pos: 'left',
+          type: 'text',
+          name: 'weight',
+          label: 'Вес г.',
+          value: null
+        },
         {
           pos: 'left',
           type: 'textarea',
@@ -102,10 +103,23 @@ export default {
   methods: {
     async submitForm(data) {
 
+      const frmData =  new FormData()
+      for(const i in data){
+
+        if(data[i] instanceof FileList){
+
+          [...data[i]].forEach((file, inx) =>  frmData.append(`${i}[${inx}]`, file))
+
+        }else {
+          frmData.append(i, data[i])
+        }
+      }
+     // console.log(data)
+      //return
 
       try {
        // const response = (await this.$repositories.comment.create(data))
-        const response = await this.$repositories.profileAds.create(data)
+        const response = await this.$repositories.profileAds.create(frmData)
         console.log(response)
       } catch (e) {
         console.log(e)
@@ -125,7 +139,7 @@ export default {
       })
 
       this.fields.forEach(item => {
-        if (item.name === 'category') {
+        if (item.name === 'categories') {
           item.options = categoriesValues
         }
       })

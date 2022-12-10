@@ -30,7 +30,8 @@ export default class BaseValidator {
     }
 
     // Проверяем на тип
-    if(Object.prototype.toString.call(validateParams.model) === '[object Object]'){
+   // if(Object.prototype.toString.call(validateParams.model) === '[object Object]'){
+    if(validateParams.model instanceof FileList){
 
       if(Object.values(validateParams.model).length === 0){
         validateParams.model = {}
@@ -84,7 +85,6 @@ export default class BaseValidator {
       if (verifiable) {
         fnParams.push(verifiable)
       }
-
 
       // Валидируем
       const isValid = validateClass[rule].apply(this, fnParams)
@@ -181,6 +181,7 @@ export default class BaseValidator {
   }
 
   ruleFileSize(model, limit, verifiable) {
+
     if (typeof verifiable !== "object") {
       return false
     }

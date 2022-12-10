@@ -1,11 +1,11 @@
 <template>
 
   <div class="form-cell element-upload" :class="renderClasses()">
-    <transition-group tag="div" class="element-upload__previews" name="slide" v-if="model">
-      <div ref="previews" class="element-upload__preview" v-for="file in Object.values(model)" :key="file.name">
-        <img class="element-upload__img" :src="getImg(file)" alt="">
-        <span class="element-upload__name">{{file.name}}</span>
-        <svg-icon @click="remove($event, file.name)" class="element-upload__remove" name="close-icon"/>
+    <transition-group tag="div" class="element-upload__previews" name="slide" v-if="tmp">
+      <div ref="previews" class="element-upload__preview" v-for="file in Object.entries(tmp)" :key="file[0]">
+        <img class="element-upload__img" :src="getImg(file[1])" alt="">
+        <span class="element-upload__name">{{file[1].name}}</span>
+        <svg-icon @click="remove($event, file[0])" class="element-upload__remove" name="close-icon"/>
       </div>
     </transition-group>
     <div class="element-upload__desc" v-html="label"></div>
@@ -42,7 +42,7 @@ export default {
       classArray: [],
       files: [],
       BaseValidator: Function,
-      tmp: []
+      tmp: {}
     }
   },
   props: {
@@ -104,6 +104,7 @@ export default {
       let isValid = true;
 
 
+
       [...files].forEach(file => {
 
         const validateParams = {
@@ -113,30 +114,49 @@ export default {
           rules: this.rules
         }
 
-        isValid = this.BaseValidator.validateAdapter(this, validateParams)
+        //isValid = this.BaseValidator.validateAdapter(this, validateParams)
         if (isValid) {
-          this.tmp.push(file)
+          this.storeFiles(file)
+
         }
+
       })
 
-      if (!isValid) {
-        this.tmp = []
-        return
+    },
+
+    storeFiles(file){
+
+      const hash = md5(file.name)
+      const ext = file.name.split('.').pop()
+      const name = `${hash}.${ext}`
+
+      if(this.tmp.hasOwnProperty(name)){
+          return
+      }
+      this.$set(this.tmp,name, file )
+     // this.tmp[name] = file
+      this.setModel(name)
+
+
+      //console.log( Object.values(this.tmp), Object.entries(this.tmp) )
+    },
+
+    setModel(name){
+      const dt = new DataTransfer();
+      for (let key in this.tmp) {
+        dt.items.add(this.tmp[key])
       }
 
-      this.renderFilePreview()
+      this.model = dt.files
+
+      // Передаём значение в основную форму
+      const event = {
+        aliasName: 'image',
+        model : this.model
+      }
+      this.$emit('input-change', event);
     },
 
-    renderFilePreview() {
-      if(!this.tmp) return
-      this.tmp.forEach(file => {
-        const hash = md5(file.name)
-        const ext = file.name.split('.').pop()
-        const name = `${hash}.${ext}`
-        this.model[name] = file
-      })
-
-    },
     getImg(file) {
       return URL.createObjectURL(file)
     },
@@ -146,18 +166,22 @@ export default {
       this.classes.filled = false
       this.$emit('input', '')
     },
+
     remove(el, fileName) {
 
-      if (this.model[fileName]) {
+      console.log(this.tmp, fileName, el )
 
-        delete this.model[fileName]
+      if (this.tmp[fileName]) {
+        delete this.tmp[fileName]
         el.target.closest('.element-upload__preview').remove()
-
       }
+
+      this.setModel(fileName)
+
+      console.log(this.tmp)
+
     },
-    // inputEvent($event) {
-    //   this.$emit('input-change', $event.target.value);
-    // }
+
   },
   mounted() {
     this.BaseValidator = new BaseValidator

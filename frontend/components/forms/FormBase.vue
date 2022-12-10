@@ -14,7 +14,7 @@
           <template v-for="(field, index) in parsedComponents.center">
             <component :is="field.compFunc"
                        v-bind="field"
-                       @input-change="changeValue(field.name, $event)"
+                       @input-change="changeValue(field.name, $event,)"
                        @input="changeValue(field.name, $event)"
             />
           </template>
@@ -118,8 +118,12 @@ export default {
     },
 
     changeValue(name, event) {
+      if(event.aliasName){
+        this.$set(this.formData, event.aliasName, event.model)
+      }else{
+        this.$set(this.formData, name, event)
+      }
 
-      this.$set(this.formData, name, event)
       //this.formData.name = event
     }
 

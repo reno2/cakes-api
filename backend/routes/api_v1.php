@@ -62,6 +62,7 @@ Route::group(['prefix'=>'v1'], function() {
 
     // Публичные ройты
     Route::get('/posts', [FrontController::class, 'index'])->name('main');
+    Route::get('/categories/{slug?}', [FrontController::class, 'category'])->name('category');
     Route::get('/menu', [MenusController::class, 'frontMenu'])->name('frontMenu');
 
     // Пользователь авторизован
@@ -73,6 +74,7 @@ Route::group(['prefix'=>'v1'], function() {
 
         // Роут создания объявления
         Route::post('/article', [ArticleController::class, 'store']);
+        Route::get('/article', [ArticleController::class, 'index'])->name('profile-articles');
 
         // Создание коммента
         Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');

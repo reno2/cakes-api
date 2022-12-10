@@ -35,19 +35,15 @@ class AuthController extends Controller
         $defaultRoleSlug = config('hydra.default_user_role_slug', 'user');
         $user->roles()->attach(Role::where('slug', $defaultRoleSlug)->first());
 
-//        return response()->json([
-//            'error' => 0, 'message' => $user
-//        ],200);
 
         return new UserResource($user);
 
     }
 
     public function newLogin(Request $request){
+
         $creds =  $request->only('email', 'password');
-//        return response()->json(
-//            $request->toArray()
-//        );
+
         if(!$token = auth()->attempt($creds)){
             return response()->json([
                 'error' => 1,

@@ -113,10 +113,10 @@ class Article extends Model implements HasMedia, Viewable
     /**
      * Get all of the user's images.
      */
-//    public function media() : MorphMany
-//    {
-//        return $this->morphMany(Media::class, 'model');
-//    }
+    public function media() : \Illuminate\Database\Eloquent\Relations\MorphMany
+    {
+        return $this->morphMany(Media::class, 'model');
+    }
 
     public function registerMediaCollections(Media $media = null) : void
     {

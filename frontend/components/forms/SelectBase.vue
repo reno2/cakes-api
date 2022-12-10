@@ -129,7 +129,7 @@ export default {
       this.model = target.dataset.value
       this.text = target.innerHTML
 
-      //this.$emit('input-change',  this.model);
+      this.$emit('input-change',  this.model);
       this.classes.filled = true
       this.classes.onFocus = false
       this.errors = []

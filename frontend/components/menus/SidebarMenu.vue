@@ -16,7 +16,7 @@ export default {
         {name: 'Добавить объявление', action: '/profile/ads/create', type: 'active'},
         {name: 'Изменить профиль', action: '/'},
         {name: 'Изменить пароль', action: '/'},
-        {name: 'Объявления', action: '/'},
+        {name: 'Объявления', action: '/profile/ads/'},
         {name: 'Вопросы', action: '/'},
         {name: 'Избранное', action: '/'},
       ]
