@@ -16,6 +16,7 @@ export default {
   layout: 'profile',
   middleware: 'profile',
   components: {Mediator, AskForm},
+  watchQuery: ['ads'],
   data() {
     return {
       user: null
