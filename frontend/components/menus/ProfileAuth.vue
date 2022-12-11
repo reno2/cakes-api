@@ -15,7 +15,7 @@
               <nuxt-link class="profile-menu__link" to="/profile">Ваш кабинет</nuxt-link>
             </li>
             <li class="profile-menu__li">
-              <nuxt-link class="profile-menu__link" to="/profile/ads">Объявления</nuxt-link>
+              <nuxt-link class="profile-menu__link" to="/profile/articles/">Объявления</nuxt-link>
             </li>
           </ul>
           <ul class="profile-menu__ul">

@@ -74,7 +74,7 @@ Route::group(['prefix'=>'v1'], function() {
 
         // Роут создания объявления
         Route::post('/article', [ArticleController::class, 'store']);
-        Route::get('/article', [ArticleController::class, 'index'])->name('profile-articles');
+        Route::get('/articles', [ArticleController::class, 'index'])->name('profile-articles');
 
         // Создание коммента
         Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');

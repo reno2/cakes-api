@@ -2,10 +2,10 @@
   <div class="ad">
     <nuxt-link :to="path('ads', card.id)" class="ad__head">
       <div class="ad__mobile">
-        <img class="ad__img" :src="card.image">
+        <img class="ad__img" :src="showPicture(card.images)">
       </div>
       <div class="ad__desktop js_ad__desktop">
-        <img class="ad__img" :src="card.image">
+        <img class="ad__img" :src="showPicture(card.images)">
       </div>
 
       <div v-if="card.tags" class="ad__tags">
@@ -27,7 +27,8 @@
         <h5 class="ad__title">
           <nuxt-link :to="path('ads', card.id)">{{ card.title }}</nuxt-link>
         </h5>
-        <span class="ad__actions" v-if="isAuthenticated && canAsk">
+
+        <span class="ad__actions" v-if="isAuthenticated && canAsk && view !== 'profile'">
           <button class="btn btn-small btn-grey" @click.prevent="openModal">Задать вопрос</button>
         </span>
       </a>
@@ -44,10 +45,26 @@ import AskForm from "@/components/forms/AskForm";
 
 export default {
   props: {
-    card: Object
+    card: Object,
+    view: {
+      type: String,
+      default: null
+    }
   },
   components: {AskForm},
   methods: {
+    showPicture(img){
+      //console.log(img)
+      if (!(img instanceof Object)) {
+        return img
+      }
+      let src = ''
+      for (var prop in img) {
+        src = img[prop]['original_url']
+        break;
+      }
+      return src
+    },
     path(type, slug) {
       return makePath(type, slug)
     },
@@ -68,7 +85,7 @@ export default {
     ...mapGetters(['isAuthenticated', 'loggedInUser'])
   },
   mounted() {
-    console.log(this.card)
+    //console.log(this.card)
   }
 }
 </script>

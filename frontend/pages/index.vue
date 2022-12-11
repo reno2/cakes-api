@@ -1,7 +1,6 @@
 <template>
   <div>
     <mediator :components="sections"/>
-    <button @click="click2">Openf</button>
   </div>
 
 </template>
@@ -21,16 +20,10 @@ export default {
 
   name: 'IndexPage',
   methods:{
-    click2(){
-      this.$modalBus.$emit('open.component', {component: AskForm, hidden: {user_id: 12}});
-
-      //console.log(token.slice(7))
-    },
   },
   async asyncData({$repositories}) {
     try {
       const response = (await $repositories.ads.all()).data
-
       const {sections, seo} = response
 
       return {

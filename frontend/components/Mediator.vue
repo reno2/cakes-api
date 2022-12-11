@@ -21,6 +21,7 @@ const loadComponent = function (component) {
 };
 const COMPONENTS = [
   {name: 'SectionFrontAds', type: 'ads-front'},
+  {name: 'SectionProfileAds', type: 'profile-ads-list'},
   {name: 'SectionBanner', type: 'banner'},
 ];
 
@@ -38,7 +39,6 @@ export default {
 
           // Получаем названиекомпонента
           const {type} = component || {};
-
           // Мэпим нахвание для динамической загрузки компонента
           const {name: componentName} =
           COMPONENTS.find((comp) => {

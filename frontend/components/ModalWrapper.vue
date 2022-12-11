@@ -19,6 +19,7 @@ export default {
       this.modal = null;
     });
     ModalBus.$on("open.component", ({ component, hidden = null}) => {
+      console.log(component)
       this.hidden = hidden
       if (typeof component === "object") {
         this.component = component;

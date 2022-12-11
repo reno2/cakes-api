@@ -6,6 +6,20 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ArticleCollection extends ResourceCollection
 {
+
+    public function __construct($resource, $type = null)
+    {
+        parent::__construct($resource);
+        if($type) $this->type = $type;
+    }
+
+    public function setTpl($type): ArticleCollection
+    {
+        $this->type = $type;
+        return $this;
+    }
+    public ?string $type = null;
+
     /**
      * Transform the resource collection into an array.
      *
@@ -14,9 +28,13 @@ class ArticleCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-//        return [
-//            'data' => $this->collection
-//        ];
          return parent::toArray($request);
+    }
+
+    public function with($request)
+    {
+        return [
+            'type' => $this->type,
+        ];
     }
 }

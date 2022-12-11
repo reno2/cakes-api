@@ -13,10 +13,10 @@ export default {
   data(){
     return {
       menu: [
-        {name: 'Добавить объявление', action: '/profile/ads/create', type: 'active'},
+        {name: 'Добавить объявление', action: '/profile/articles/create', type: 'active'},
         {name: 'Изменить профиль', action: '/'},
         {name: 'Изменить пароль', action: '/'},
-        {name: 'Объявления', action: '/profile/ads/'},
+        {name: 'Объявления', action: '/profile/articles/'},
         {name: 'Вопросы', action: '/'},
         {name: 'Избранное', action: '/'},
       ]

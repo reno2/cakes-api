@@ -7,11 +7,12 @@ const Sections = class {
     }
 
     const adaptedComponents = components.map((component) => {
-
+      // console.log(1, component)
       switch (component.type) {
         case 'banner':
           return this.sectionBanner(component);
         case 'ads-front':
+        case 'profile-ads-list':
           return this.sectionCardsList(component);
         default:
           return component;
@@ -35,14 +36,20 @@ const Sections = class {
       title = '',
       tags = [],
       type = 'list_ads',
-      list = []
+      data = [],
+      links = {},
+      meta = {},
+      sections = []
     } = component || {};
 
     return {
       tags,
       type,
       title,
-      list
+      data,
+      links,
+      meta,
+      sections
     };
   }
 

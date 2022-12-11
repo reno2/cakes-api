@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api\V1\profile;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AdsRequest;
+use App\Http\Resources\V1\ArticleCollection;
 use App\Http\Resources\V1\ArticleResource;
+use App\Models\Article;
 use App\Repositories\AdsRepository;
 use App\Repositories\UserRepository;
 use App\Services\AdsService;
@@ -38,19 +40,19 @@ class ArticleController extends Controller
     {
         $userPosts = [];
         if($request->user()->id){
-            $where = [
-                ['user_id', $request->user()->id],
-                ['moderate', '=', 1],
-                ['published', '=', 1]
-            ];
-            $userPosts = $this->adsRepository->getByCurrentProfileAdsSortedDesc($where, 'ads');
-
+           $userPosts = $this->adsRepository->getByCurrentProfileAdsSortedDesc( ['user_id' => $request->user()->id], 'ads');
+           $userPosts = ArticleResource::collection($userPosts)
+               ->setTpl('profile-ads-list')
+               ->response()->getData(true);
         }
+        $seo = ['title' => 'Профиль пользователя', 'description' => 'Это страница пользователя'];
+
        return $this->successResponse(
            [
-               'articles' => ArticleResource::collection($userPosts)->response()->getData(true)
+              'sections' => [$userPosts],
+              'seo' => $seo
             ],
-           'Пост создан', 201);
+           '', 200);
 
 
     }

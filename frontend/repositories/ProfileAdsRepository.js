@@ -1,8 +1,9 @@
 import Repository from './Repository'
 export default class ProfileAdsRepository extends Repository{
 
-  resource = '/profile/article'
-  constructor($axios) {
-    super($axios);
+  resource = '/profile/articles'
+  constructor($axios, route) {
+    super($axios, route);
+    this.getUrl()
   }
 }

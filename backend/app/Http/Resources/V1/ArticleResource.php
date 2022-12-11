@@ -30,7 +30,19 @@ class ArticleResource extends JsonResource
         return $images;
     }
 
+    public function setTpl($type): ArticleResource
+    {
+        $this->type = $type;
+        return $this;
+    }
     public ?string $type = null;
+
+    public static function collection($resource): ArticleCollection
+    {
+        return new ArticleCollection($resource);
+    }
+
+
     /**
      * Transform the resource into an array.
      *
@@ -39,14 +51,15 @@ class ArticleResource extends JsonResource
      */
     public function toArray($request)
     {
+
         return array_merge(
             [
+                'id' => $this->id,
                 'type' => $this->type,
                 'date' => $this->created_at->format('d.m.Y'),
                 'title' => $this->title,
                 'images' => $this->getImages(),
                 'category' => CategoryResource::collection($this->categories),
-
             ],
 
         );

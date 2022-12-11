@@ -1,13 +1,24 @@
 export default class Repository {
 
   resource = null
+  url = null
 
-  constructor(axios) {
+  constructor(axios, route) {
     this.axios = axios
+    this.route = ''
+
+    if(route) {
+      this.route = '?' + new URLSearchParams(route.query).toString()
+    }
+
+  }
+
+  getUrl(){
+    return  this.url = this.resource + this.route
   }
 
   all() {
-    return this.axios.get(`${this.resource}`)
+    return this.axios.get(`${this.url}`)
   }
 
   show(id) {
