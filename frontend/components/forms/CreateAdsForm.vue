@@ -116,7 +116,7 @@ export default {
       }
      // console.log(data)
       //return
-
+      console.log(this.$repositories.profileAds.create)
       try {
        // const response = (await this.$repositories.comment.create(data))
         const response = await this.$repositories.profileAds.create(frmData)

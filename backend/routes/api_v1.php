@@ -73,7 +73,7 @@ Route::group(['prefix'=>'v1'], function() {
         Route::get('/user', [AuthController::class, 'me'])->middleware(['auth.role']);
 
         // Роут создания объявления
-        Route::post('/article', [ArticleController::class, 'store']);
+        Route::post('/articles', [ArticleController::class, 'store']);
         Route::get('/articles', [ArticleController::class, 'index'])->name('profile-articles');
 
         // Создание коммента

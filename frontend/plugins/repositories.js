@@ -3,6 +3,7 @@ import PostRepository from '~/repositories/PostRepository'
 import CategoryRepository from '~/repositories/CategoryRepository'
 import CommentRepository from '~/repositories/CommentRepository'
 import ProfileAdsRepository from '~/repositories/ProfileAdsRepository'
+import login from "../pages/login";
 
 const repositoryBuilder = ($axios, $route) => ({
   ads: new PostRepository( $axios, $route ),
@@ -12,6 +13,5 @@ const repositoryBuilder = ($axios, $route) => ({
 })
 
 export default (ctx, inject) => {
-
   inject('repositories', repositoryBuilder(ctx.app.$apitest, ctx.route))
 }

@@ -12,6 +12,7 @@
 import { sectionsAdapters, seoAdapters } from '@/adapters';
 import Mediator from "@/components/Mediator";
 import AskForm from "@/components/forms/AskForm";
+import ProfileAdsRepository from "../../../repositories/ProfileAdsRepository";
 export default {
   layout: 'profile',
   middleware: 'profile',
@@ -27,9 +28,12 @@ export default {
   },
   name: 'ProfileAds',
 
-  async asyncData({$repositories, route  }) {
+  async asyncData({$repositories, route, $axios  }) {
     try {
-      const response = (await  $repositories.profileAds.all()).data
+
+      const rep = new ProfileAdsRepository($axios, route)
+
+      const response = (await rep.all()).data
       const {sections, seo} = response.data
       return {
         seo : seoAdapters.seoPage(seo),
