@@ -27,10 +27,10 @@ class JsonApiPaginateServiceProvider extends ServiceProvider
 
     protected function registerMacro()
     {
-        $macro = function (int $maxResults = null, int $defaultSize = null) {
+        $macro = function (int $maxResults = null, string $numberParameter = null, int $defaultSize = null) {
             $maxResults = $maxResults ?? config('json-api-paginate.max_results');
             $defaultSize = $defaultSize ?? config('json-api-paginate.default_size');
-            $numberParameter = config('json-api-paginate.number_parameter');
+            $numberParameter = $numberParameter ?? config('json-api-paginate.number_parameter');
             $cursorParameter = config('json-api-paginate.cursor_parameter');
             $sizeParameter = config('json-api-paginate.size_parameter');
             $paginationParameter = config('json-api-paginate.pagination_parameter');
@@ -55,12 +55,12 @@ class JsonApiPaginateServiceProvider extends ServiceProvider
                 : $this
                     ->{$paginationMethod}($size, ['*'], $paginationParameter.'.'.$numberParameter)
                     ->setPageName($paginationParameter.'['.$numberParameter.']')
-                    ->appends(Arr::except(request()->input(), $paginationParameter.'.'.$numberParameter));
+                    //   ->setPageName($numberParameter)
+                    ->appends(Arr::except(request()->input(), $numberParameter));
 
             if (! is_null(config('json-api-paginate.base_url'))) {
                 $paginator->setPath(config('json-api-paginate.base_url'));
             }
-
             return $paginator;
         };
 

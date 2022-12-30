@@ -6,11 +6,13 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ArticleCollection extends ResourceCollection
 {
-
-    public function __construct($resource, $type = null)
+    public ?string $type = null;
+    public ?string $page = null;
+    public function __construct($resource, $type = null, $page = null)
     {
         parent::__construct($resource);
         if($type) $this->type = $type;
+        if($page) $this->page = $page;
     }
 
     public function setTpl($type): ArticleCollection
@@ -18,7 +20,12 @@ class ArticleCollection extends ResourceCollection
         $this->type = $type;
         return $this;
     }
-    public ?string $type = null;
+    public function setPagIde($page): ArticleCollection
+    {
+        $this->page = $page;
+        return $this;
+    }
+
 
     /**
      * Transform the resource collection into an array.
@@ -35,6 +42,9 @@ class ArticleCollection extends ResourceCollection
     {
         return [
             'type' => $this->type,
+            'meta' => [
+                'page_id' => $this->page,
+            ]
         ];
     }
 }

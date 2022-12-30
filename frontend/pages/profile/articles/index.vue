@@ -17,7 +17,7 @@ export default {
   layout: 'profile',
   middleware: 'profile',
   components: {Mediator, AskForm},
-  watchQuery: ['ads'],
+  //watchQuery: ['ads'],
   data() {
     return {
       user: null
@@ -33,8 +33,11 @@ export default {
 
       const rep = new ProfileAdsRepository($axios, route)
 
-      const response = (await rep.all()).data
+      const response = (await rep.all({
+        'perPage': 3
+      })).data
       const {sections, seo} = response.data
+
       return {
         seo : seoAdapters.seoPage(seo),
         sections: sectionsAdapters.sections(sections, ['ads-front']),

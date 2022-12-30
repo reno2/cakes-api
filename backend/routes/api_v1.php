@@ -32,6 +32,8 @@ use App\Http\Controllers\Api\V1\profile\CommentController;
 Route::group(['prefix'=>'v1'], function() {
 
 
+    Route::get('/articles', [ArticleController::class, 'index'])->name('profile-articles2');
+
 //    Route::apiResources([
 //        'posts' => PostController::class,
 //    ]);

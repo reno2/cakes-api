@@ -278,5 +278,8 @@ svg.element-upload__load {
   font-size: 10px;
   color: #6A747B;
   margin: 4px 0;
+  text-overflow: ellipsis;
+  max-width: 100px;
+  overflow: hidden;
 }
 </style>

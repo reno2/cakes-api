@@ -17,8 +17,8 @@ export default class Repository {
     return  this.url = this.resource + this.route
   }
 
-  all() {
-    return this.axios.get(`${this.url}`)
+  all(params = {}) {
+    return this.axios.get(`${this.url}`, {params})
   }
 
   show(id) {

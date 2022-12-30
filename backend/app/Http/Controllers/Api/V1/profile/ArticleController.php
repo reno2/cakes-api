@@ -15,6 +15,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
+use function Psy\debug;
+
 class ArticleController extends Controller
 {
     use ApiResponseTrait;
@@ -38,13 +40,16 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
+        $userId = $request->user()->id;
+        $perPage = $request->get('perPage') ?? 10;
         $userPosts = [];
-        if($request->user()->id){
-           $userPosts = $this->adsRepository->getByCurrentProfileAdsSortedDesc( ['user_id' => $request->user()->id], 'ads');
+
+           $userPosts = $this->adsRepository->getByCurrentProfileAdsSortedDesc( null,  'ads', $userId, $perPage);
            $userPosts = ArticleResource::collection($userPosts)
+               ->setPagIde('ads')
                ->setTpl('profile-ads-list')
                ->response()->getData(true);
-        }
+
         $seo = ['title' => 'Профиль пользователя', 'description' => 'Это страница пользователя'];
 
        return $this->successResponse(
