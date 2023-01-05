@@ -14,9 +14,9 @@
     </div>
 
     <transition name="list-complete">
-      <div v-if="isOpen" class="element-select__values">
+      <div v-show="isOpen" class="element-select__values">
         <ul class="element-select__ul">
-          <li class="element-select__li js_select__option" :data-value="val.value" v-for="val in options">{{
+          <li ref="options" class="element-select__li js_select__option" :data-value="val.value" v-for="val in options">{{
               val.title
             }}
           </li>
@@ -60,7 +60,7 @@ export default {
       required: true,
     },
     value: {
-      type: String,
+      type: String|Number,
     },
     options: {
       type: Array
@@ -135,11 +135,26 @@ export default {
       this.errors = []
     },
 
+    setValue(value){
+
+      if(!this.$refs.options.length || !value){
+        return
+      }
+      this.$refs.options.forEach(el => {
+        if(el.dataset.value == value){
+          this.inputEvent(el)
+        }
+      })
+
+    }
 
   },
   mounted() {
     this.model = this.value;
-
+    if(this.value){
+      this.setValue(this.value)
+      this.classes.filled = true
+    }
     window.addEventListener("open:select", ({detail}) => {
       if(detail.id !== this._uid){
         this.isOpen = false

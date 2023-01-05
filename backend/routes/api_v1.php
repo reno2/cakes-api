@@ -61,6 +61,7 @@ Route::group(['prefix'=>'v1'], function() {
 //    });
 
 
+    Route::get('/articles/{id}', [ArticleController::class, 'show']);
 
     // Публичные ройты
     Route::get('/posts', [FrontController::class, 'index'])->name('main');
@@ -77,6 +78,7 @@ Route::group(['prefix'=>'v1'], function() {
         // Роут создания объявления
         Route::post('/articles', [ArticleController::class, 'store']);
         Route::get('/articles', [ArticleController::class, 'index'])->name('profile-articles');
+        Route::get('/articles/{id}', [ArticleController::class, 'show'])->name('profile-show');
 
         // Создание коммента
         Route::post('/comments', [CommentController::class, 'store'])->name('comments.store');

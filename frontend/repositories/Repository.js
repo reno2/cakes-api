@@ -36,7 +36,7 @@ export default class Repository {
   }
 
   update(id, payload) {
-    return this.axios.post(`${resource}/${id}`, payload)
+    return this.axios.post(`${resource}/edit/${id}`, payload)
   }
 
   delete(id) {

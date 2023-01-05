@@ -71,7 +71,7 @@ class FrontController extends Controller
             $this->errorResponse('', 404);
         }
        $articles = $category->articles()->paginate(3)->appends($request->query());
-
+        //dd(new  CategoryResource($category));
         return $this->successResponse(
             [
                 'posts' => ArticleResource::collection($articles)->response()->getData(true),

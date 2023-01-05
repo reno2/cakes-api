@@ -30,7 +30,7 @@ class AdsRequest extends FormRequest
     }
 
     public function validationData () {
-        return $this->stripTags(['title', 'detail_text'], parent::validationData());
+        return $this->stripTags(['title', 'description'], parent::validationData());
     }
 
     /**

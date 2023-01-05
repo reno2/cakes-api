@@ -119,7 +119,7 @@ export default {
 
     }
   },
-  watch: { // It listens to the change in prop name
+  watch: {
     paginationObj: function (newValue, oldValue) {
       this.paginationObj = newValue
       this.buildPagination()
@@ -200,27 +200,6 @@ export default {
 }
 /* endregion States */
 
-/*.base-pagination__arrows.disable button,*/
-/*.base-pagination__li.current button{*/
-/*  cursor: default;*/
-/*  background: #dfd5e1;*/
-/*  border-color: #dfd5e1;*/
-/*}*/
-
-/*.base-pagination__li:not(.current, .disable) button:hover{*/
-/*  background: #dfbde7;*/
-/*  border-color: #dfbde7;*/
-/*}*/
-
-/*.base-pagination__arrows button{*/
-/*  background: unset;*/
-/*}*/
-/*.base-pagination__arrows:not(.disable) button:hover{*/
-/*  background: unset;*/
-/*}*/
-/*.base-pagination__arrows:not(.disable) button:hover .icon{*/
-/*  fill: #dfbde7;*/
-/*}*/
 
 .base-pagination__svg{
   width: 22px;

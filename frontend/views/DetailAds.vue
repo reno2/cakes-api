@@ -16,7 +16,7 @@
     </nuxt-link>
 
     <div class="ad__body">
-      <a class="ad__info">
+      <div class="ad__info">
         <div class="ad__categories">
           <nuxt-link class="ad__category" :to="path('category', card.category.slug)">{{
               card.category.title
@@ -31,7 +31,12 @@
         <span class="ad__actions" v-if="isAuthenticated && canAsk && view !== 'profile'">
           <button class="btn btn-small btn-grey" @click.prevent="openModal">Задать вопрос</button>
         </span>
-      </a>
+        <div class="ad__actions">
+          <nuxt-link :to="getPath(card.id)" class="ad__actions-edit" v-if="userPost">
+            редактировать
+          </nuxt-link>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -77,8 +82,16 @@ export default {
         }
       });
     },
+    userPost(){
+      return this.isAuthenticated && this.loggedInUser.id === this.card.id
+    },
     canAsk(){
       return this.isAuthenticated && this.loggedInUser.id !== this.card.id
+    },
+    getPath(id){
+      if(this.view === 'profile'){
+        return `/profile/articles/edit/${id}`
+      }
     }
   },
   computed: {

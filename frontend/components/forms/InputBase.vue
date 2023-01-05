@@ -41,7 +41,7 @@ export default {
       required: true,
     },
     value: {
-      type: String,
+      type: String|Number,
     }
   },
   watch: {
@@ -98,6 +98,9 @@ export default {
   },
   mounted() {
     this.model = this.value;
+    if(this.value){
+      this.classes.filled = true
+    }
     if (this.type === 'hidden' && this.value) {
       this.$emit('input-change', this.model);
     }

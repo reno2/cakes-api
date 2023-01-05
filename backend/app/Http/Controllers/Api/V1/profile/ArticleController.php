@@ -44,22 +44,22 @@ class ArticleController extends Controller
         $perPage = $request->get('perPage') ?? 10;
         $userPosts = [];
 
-           $userPosts = $this->adsRepository->getByCurrentProfileAdsSortedDesc( null,  'ads', $userId, $perPage);
-           $userPosts = ArticleResource::collection($userPosts)
-               ->setPagIde('ads')
-               ->setTpl('profile-ads-list')
-               ->response()->getData(true);
+        $userPosts = $this->adsRepository->getByCurrentProfileAdsSortedDesc(null, 'ads', $userId, $perPage);
+        $userPosts = ArticleResource::collection($userPosts)
+            ->setPagIde('ads')
+            ->setTpl('profile-ads-list')
+            ->response()->getData(true);
 
         $seo = ['title' => 'Профиль пользователя', 'description' => 'Это страница пользователя'];
 
-       return $this->successResponse(
-           [
-              'sections' => [$userPosts],
-              'seo' => $seo
+        return $this->successResponse(
+            [
+                'sections' => [$userPosts],
+                'seo' => $seo
             ],
-           '', 200);
-
-
+            '',
+            200
+        );
     }
 
     /**
@@ -70,73 +70,61 @@ class ArticleController extends Controller
      */
     public function store(AdsRequest $request)
     {
-
-
         $inputs = $request->all();
 
 
-
-        try{
+        try {
             $this->adsService->chain($inputs);
             $this->successResponse([], 'Пост создан', 201);
-        }catch (\Exception $e){
-            $this->errorResponse( $e->getMessage(), 401);
+        } catch (\Exception $e) {
+            $this->errorResponse($e->getMessage(), 401);
         }
-//
-//        return response()->json(
-//            [
-//                'data' => $inputs
-//            ],
-//            200
-//        );
+    }
 
-//        $tt = '';
-//        $validated = $request->validated();
-//        $inputs = $request->all();
-//        try{
-//            $this->adsService->chain($inputs);
-//            session()->flash('notice', "Объявление создано и отправлено на модерацию");
-//        }catch (\Exception $e){
-//            return back()->withErrors( $e->getMessage())->withInput();
-//        }
-//
-//        return redirect()->to(route('profile.ads.index').'#moderate');
-}
 
-/**
- * Display the specified resource.
- *
- * @param  int  $id
- * @return \Illuminate\Http\Response
- */
-public
-function show($id)
-{
-    //
-}
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return JsonResponse
+     */
+    public function show($id)
+    {
+        try {
+            $article = Article::findOrFail($id);
+            $articleResource = new ArticleResource($article);
+           return $this->successResponse(
+               $articleResource, 'good', 200);
+        }catch (\Exception $e) {
+            $this->errorResponse($e->getMessage(), 404);
+        }
+    }
 
-/**
- * Update the specified resource in storage.
- *
- * @param  Request  $request
- * @param  int  $id
- * @return \Illuminate\Http\Response
- */
-public
-function update(Request $request, $id)
-{
-    //
-}
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function update(
+        Request $request,
+        $id
+    ) {
+        //
+    }
 
-/**
- * Remove the specified resource from storage.
- *
- * @param  int  $id
- * @return \Illuminate\Http\Response
- */
-public
-function destroy($id)
-{
-    //
-}
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public
+    function destroy(
+        $id
+    ) {
+        //
+    }
 }

@@ -7,6 +7,7 @@
         </template>
       </div>
     </div>
+
     <BasePagination v-if="listLocal.length" :paginationObj="dynamicMeta" @paginate="paginate"/>
 
   </div>
@@ -69,7 +70,7 @@ export default {
     async fetch(url) {
       try {
         const {sections} = (await this.$axios.$get(url, {params :{
-          'perPage': 3
+          'perPage': this.compMeta.per_page
         }})).data
         return sections[0]
 
@@ -80,7 +81,6 @@ export default {
     },
   },
   mounted() {
-
     this.compData = this.data
     this.compMeta =  this.meta
 

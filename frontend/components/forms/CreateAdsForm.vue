@@ -16,6 +16,10 @@ import {mapGetters} from "vuex";
 export default {
   components: {FormBase},
   props: {
+    values: {
+      type: Object,
+      default: {}
+    }
   },
   data() {
     return {
@@ -35,24 +39,25 @@ export default {
           type: 'text',
           name: 'title',
           label: 'Название',
-          value: null
+          value: (this.values) ? this.values.title : null
         },
         {
           pos: 'right',
           type: 'file',
           name: 'file',
+          value: (this.values) ? this.values.images : null,
           rules: 'ruleMaxFiles:4,ruleFileSize:500000,ruleType:jpg|png|jpeg',
           label: 'Загрузите свои изображени <br> не более 5 файлов. (jpeg, png)',
         },
         {
           pos: 'left',
           type: 'select',
-          name: 'state',
+          name: 'published',
           label: 'Статус',
-          value: null,
+          value: (this.values) ? this.values.published : null,
           options: [
-            {value: 0, title: 'Опубликованно'},
-            {value: 1, title: 'Не опубликованно'}
+            {value: 1, title: 'Опубликованно'},
+            {value: 0, title: 'Не опубликованно'}
           ]
         },
         {
@@ -60,7 +65,7 @@ export default {
           type: 'select',
           name: 'categories',
           label: 'Выбирете категорию',
-          value: null,
+          value:  null,
           options: []
         },
         {
@@ -82,19 +87,20 @@ export default {
           type: 'text',
           name: 'price',
           label: 'Цена',
-          value: null
+          value: (this.values) ? this.values.price : null
         },
         {
           pos: 'left',
           type: 'text',
           name: 'weight',
           label: 'Вес г.',
-          value: null
+          value:  (this.values) ? this.values.weight : null
         },
         {
           pos: 'left',
           type: 'textarea',
-          name: 'detail_text',
+          name: 'description',
+          value:  (this.values) ? this.values.description : null,
           label: 'Описание',
         },
       ]
@@ -102,6 +108,7 @@ export default {
   },
   methods: {
     async submitForm(data) {
+
 
       const frmData =  new FormData()
       for(const i in data){
@@ -114,11 +121,7 @@ export default {
           frmData.append(i, data[i])
         }
       }
-     // console.log(data)
-      //return
-      console.log(this.$repositories.profileAds.create)
       try {
-       // const response = (await this.$repositories.comment.create(data))
         const response = await this.$repositories.profileAds.create(frmData)
         console.log(response)
       } catch (e) {

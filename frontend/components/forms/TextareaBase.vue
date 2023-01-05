@@ -103,6 +103,9 @@ export default {
   },
   mounted() {
     this.model = this.value;
+    if(this.value){
+      this.classes.filled = true
+    }
     if (this.type === 'hidden' && this.value) {
       this.$emit('input-change', this.model);
     }

@@ -34,7 +34,7 @@ export default {
       const rep = new ProfileAdsRepository($axios, route)
 
       const response = (await rep.all({
-        'perPage': 3
+        'perPage': 6
       })).data
       const {sections, seo} = response.data
 
