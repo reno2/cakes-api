@@ -254,14 +254,6 @@ export default {
         const currentHeightCenter = currentElementCord.y + currentElementCord.height / 2;
         const currentWidthCenter = currentElementCord.x;
 
-
-        //
-        //  const nextElement = (positionY < currentHeightCenter) ?
-        //    currentElement :
-        //    currentElement.nextElementSibling;
-
-       // console.log(positionY,currentElementCord.y, currentHeightCenter/2, currentWidthCenter/2)
-        //return nextElement;
         if (positionY > currentHeightCenter) {
           return currentElement
         }
@@ -281,17 +273,8 @@ export default {
     this.$refs.container.$el.addEventListener(`dragend`, (evt) => {
       evt.target.closest('.js_element').classList.remove(`dragging`);
     });
-
+    // Обрабатываем событие перетаскивание на элементе
     this.$refs.container.$el.addEventListener(`dragover`, this.drugElement)
-
-    //   (evt) => {
-    //   evt.preventDefault();
-    //
-    //   const activeElement =  this.$refs.container.$el.querySelector(`.selected`);
-    //   const currentElement = evt.target.closest('.js_element');
-    //
-    //   console.log(activeElement, currentElement)
-    // })
 
   }
 }
