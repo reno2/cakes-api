@@ -2,11 +2,18 @@
 
   <div class="form-cell element-upload" :class="renderClasses()">
 
-    <transition-group tag="div" class="element-upload__previews" name="slide" v-if="computedTmp">
-      <div ref="previews" @click="select(file[0])" class="element-upload__preview" v-for="file in Object.entries(computedTmp)" :key="file[0]">
+    <transition-group ref="container" tag="div" class="element-upload__previews" name="slide" v-show="renderData">
+      <div v-for="(file, key) in Object.entries(renderData)"
+           ref="previews"
+           @click="selectItem(file[0], key)"
+           class="element-upload__preview js_element"
+           :key="file[0]"
+           :data-index="key"
+           draggable="true"
+      >
         <img class="element-upload__img" :src="getImg(file[1])" alt="">
-        <span class="element-upload__name">{{file[1].name}}</span>
-        <svg-icon @click.stop="remove($event, file[0])" class="element-upload__remove" name="close-icon"/>
+        <span class="element-upload__name">{{ file[1].name }}</span>
+        <svg-icon @click.stop="removeItem($event, file[0], key)" class="element-upload__remove" name="close-icon"/>
         <span class="element-upload__selected">Главный</span>
       </div>
     </transition-group>
@@ -28,6 +35,7 @@
 import md5 from 'md5'
 import {checkRequired} from "@/helpers/functions"
 import BaseValidator from "../../custom-validators/BaseValidator";
+import login from "../../pages/login";
 
 export default {
   inheritAttrs: false,
@@ -37,17 +45,18 @@ export default {
       errors: [],
       state: true,
       model: {},
+      BaseValidator: Function,
       classes: {
         filled: false,
         onFocus: false,
       },
       classArray: [],
-      files: [],
-      BaseValidator: Function,
+
+      filesToRender: [],
+      filesToDelete: [],
       tmp: {},
       old: {},
       selected: null,
-      remove: []
     }
   },
   props: {
@@ -59,7 +68,7 @@ export default {
       required: true,
     },
     value: {
-      type: String|Object,
+      type: String | Object,
     },
   },
   watch: {
@@ -78,42 +87,50 @@ export default {
     }
   },
   computed: {
-    computedTmp(){
-      let result = {}
-
-      if(Object.keys(this.old).length){
-        result  = Object.assign(this.old)
+    renderData() {
+      const result = {}
+      if (!this.filesToRender.length) {
+        return result
       }
-
-      if(Object.keys(this.tmp).length){
-        result  = Object.assign(result, this.tmp)
-      }
+      const files = {...this.old, ...this.tmp}
+      // Собераем новый объекст для вывода
+      this.filesToRender.forEach(fileName => {
+        result[fileName] = files[fileName]
+      })
+      // Метод для добавления обработчиков событий
+      this.setEvents()
 
       return result
-    }
-  },
-  methods: {
-    select(filename){
-
-      this.selected = filename
-      if(this.old[filename]){
-        this.old = this.sortObj(this.old, filename)
-      }
-      if(this.tmp[filename]){
-        this.tmp = this.sortObj(this.tmp, filename)
-      }
     },
 
-    sortObj(obj, filename){
+  },
+  methods: {
+    selectItem(filename, inx) {
+      // Удаляем элемент по интексу
+      this.filesToRender.splice(inx, 1)
+      // Добавляем в начало массива
+      this.filesToRender.unshift(filename)
+    },
+    removeItem(el, fileName, inx) {
+      if (this.old[fileName]) {
+        delete this.old[fileName]
+        this.filesToDelete.push(fileName)
+      }
+      if (this.tmp[fileName]) {
+        delete this.tmp[fileName]
+      }
+      this.filesToRender.splice(inx, 1)
+    },
+    sortObj(obj, filename) {
       const reduce = Object.entries(obj).reduce((acc, [val, key]) => {
-        if(val === filename){
+        if (val === filename) {
           acc.unshift([val, key])
-        }else{
+        } else {
           acc.push([val, key])
         }
         return [...acc]
       }, [])
-      return  Object.fromEntries(reduce)
+      return Object.fromEntries(reduce)
     },
 
     renderClasses() {
@@ -125,14 +142,8 @@ export default {
     },
 
     loadFile({target: {files}}) {
-
-
       if (!files.length) return
-
       let isValid = true;
-
-
-
       [...files].forEach(file => {
 
         const validateParams = {
@@ -150,43 +161,40 @@ export default {
       })
 
     },
-    ifNotExists(file){
+    storeFiles(file) {
+      const name = this.ifNotExists(file)
+      if (!name) {
+        return
+      }
+      this.filesToRender.push(name)
+      this.$set(this.tmp, name, file)
+      this.setModel(name)
+    },
+    ifNotExists(file) {
       const hash = md5(file.name)
       const ext = file.name.split('.').pop()
       const name = `${hash}.${ext}`
-      if(this.tmp.hasOwnProperty(name)){
+      if (this.tmp.hasOwnProperty(name)) {
         return null
       }
       return name
     },
-
-    storeFiles(file){
-      const name = this.ifNotExists(file)
-      if(!name){
-        return
-      }
-      this.$set(this.tmp, name, file )
-      this.setModel(name)
-    },
-
-    setModel(name){
+    setModel(name) {
       const dt = new DataTransfer();
       for (let key in this.tmp) {
         dt.items.add(this.tmp[key])
       }
-
       this.model = dt.files
-
       // Передаём значение в основную форму
       const event = {
         aliasName: 'image',
-        model : this.model
+        model: this.model
       }
       this.$emit('input-change', event);
     },
 
     getImg(file) {
-      if(file instanceof File){
+      if (file instanceof File) {
         return URL.createObjectURL(file)
       }
       return file.original_url
@@ -198,33 +206,93 @@ export default {
       this.classes.filled = false
       this.$emit('input', '')
     },
+    setOldFiles(oldFiles) {
+      // Устанавливаем основныйм первый
+      if (!this.selected) {
+        this.selected = this.filesToRender[0]
+      }
+      // Собераем массив для вывода
+      // Сохраняем файлы для редиктирования
+      for (let file in oldFiles) {
+        this.filesToRender.push(oldFiles[file]['file_name'])
+        this.$set(this.old, oldFiles[file]['file_name'], oldFiles[file])
+      }
+    },
+    setEvents(){
+      this.$nextTick(() => {
+         // console.log(this.$refs.previews)
+      })
+    },
+    drugElement(evt){
+      evt.preventDefault();
+        const activeElement =  this.$refs.container.$el.querySelector(`.dragging`);
+        const currentElement = evt.target.closest('.js_element');
+        if(activeElement === currentElement){
+          return
+        }
 
-    remove(el, fileName) {
+      const nextElement = this.drugGetNextElement(evt.clientY, evt.clientX, currentElement)
 
-      console.log(el)
-      // if (this.tmp[fileName]) {
-      //   delete this.tmp[fileName]
-      //   el.target.closest('.element-upload__preview').remove()
-      // }
-      //
-      // this.setModel(fileName)
+      if(!nextElement){
+        return
+      }
+
+      const inx = Number(activeElement.dataset.index)
+      const f = this.filesToRender[activeElement.dataset.index]
+      const nextInx = Number(nextElement.dataset.index)
+      this.filesToRender.splice(inx, 1)
+      this.filesToRender.splice(nextInx, 0, f);
+
+
+
     },
 
-    setOldFiles(oldFiles){
-      for(let file in oldFiles){
-        if(!this.selected){
-          this.selected = oldFiles[file]['file_name']
-        }
-        this.$set(this.old, oldFiles[file]['file_name'],oldFiles[file])
-      }
-    }
+    drugGetNextElement(positionY, positionX, currentElement){
+      if(currentElement) {
 
+        const currentElementCord = currentElement.getBoundingClientRect();
+        const currentHeightCenter = currentElementCord.y + currentElementCord.height / 2;
+        const currentWidthCenter = currentElementCord.x;
+
+
+        //
+        //  const nextElement = (positionY < currentHeightCenter) ?
+        //    currentElement :
+        //    currentElement.nextElementSibling;
+
+       // console.log(positionY,currentElementCord.y, currentHeightCenter/2, currentWidthCenter/2)
+        //return nextElement;
+        if (positionY > currentHeightCenter) {
+          return currentElement
+        }
+      }
+
+    }
   },
   mounted() {
     this.BaseValidator = new BaseValidator
     if (this.value) {
-     this.setOldFiles(this.value)
+      this.setOldFiles(this.value)
     }
+
+    this.$refs.container.$el.addEventListener(`dragstart`, (evt) => {
+      evt.target.closest('.js_element').classList.add(`dragging`);
+    });
+    this.$refs.container.$el.addEventListener(`dragend`, (evt) => {
+      evt.target.closest('.js_element').classList.remove(`dragging`);
+    });
+
+    this.$refs.container.$el.addEventListener(`dragover`, this.drugElement)
+
+    //   (evt) => {
+    //   evt.preventDefault();
+    //
+    //   const activeElement =  this.$refs.container.$el.querySelector(`.selected`);
+    //   const currentElement = evt.target.closest('.js_element');
+    //
+    //   console.log(activeElement, currentElement)
+    // })
+
   }
 }
 </script>
@@ -295,6 +363,12 @@ svg.element-upload__load {
   max-height: 100%;
   border: 2px dashed #cccccc;
 }
+.element-upload__preview.dragging{
+  background: #eee;
+  transform: scale(0.9);
+  cursor: move;
+  opacity: .5;
+}
 
 .element-upload__remove {
   position: absolute;
@@ -311,6 +385,7 @@ svg.element-upload__load {
   width: 100px;
   object-fit: contain;
 }
+
 .element-upload__name {
   font-size: 10px;
   color: #6A747B;
@@ -319,10 +394,12 @@ svg.element-upload__load {
   max-width: 100px;
   overflow: hidden;
 }
-.element-upload__selected{
+
+.element-upload__selected {
   display: none;
 }
-.element-upload__preview:first-child .element-upload__selected{
+
+.element-upload__preview:first-child .element-upload__selected {
   display: block;
   position: absolute;
   bottom: 0;
