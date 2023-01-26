@@ -5,7 +5,7 @@
       <svg-icon name="reg"/>
     </div>
     <div class="form-container__form">
-      <FormBase class="inline-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm">
+      <FormBase class="inline-form" form-type="login" :Validator="Validator" :fields="fields" @submit="submitForm" view="col">
         <template v-slot:form-header>
           <div class="block-title">
             <div class="block-title__sub">Присоеденяйтесь к нам</div>
@@ -125,7 +125,10 @@ export default {
   border-bottom-right-radius: 10px;
   border-top-right-radius: 10px
 }
-
+.form-base.inline-form{
+  padding: 80px 32px 32px;
+  width: 100%;
+}
 /* endregion form */
 
 /* region Block Title */

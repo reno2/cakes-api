@@ -6,13 +6,13 @@ export default {
       lang: 'en'
     },
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: ''},
+      {name: 'format-detection', content: 'telephone=no'}
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
       {
         rel: 'stylesheet',
         href:
@@ -46,7 +46,11 @@ export default {
     {
       src: '~/plugins/modal.js',
       ssr: true
-    }
+    },
+    {
+      src: '~/plugins/laravel-echo',
+      ssr: false
+    },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -64,15 +68,16 @@ export default {
     'nuxt-ssr-cache',
     '@nuxtjs/svg-sprite',
     '@nuxtjs/proxy',
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    'nuxt-izitoast'
   ],
   styleResources: {
     scss: ['./assets/scss/*.scss']
   },
   cache: {
     cache: true,
-   // useHostPrefix: false,
-   // pages: [],
+    // useHostPrefix: false,
+    // pages: [],
 
   },
   store: {
@@ -105,34 +110,34 @@ export default {
       //   }
       // },
       local: {
-        token:{
+        token: {
           property: 'access_token',
           global: true,
           type: 'bearer'
         },
         user: {
-            property: false // Данные не оборачиваются в обёртку
+          property: false // Данные не оборачиваются в обёртку
         },
         url: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
         endpoints: {
-          login: { url: '/login', method: 'post' },
-          logout: { url: '/', method: 'post' },
-          user: { url: '/user', method: 'get' }
+          login: {url: '/login', method: 'post'},
+          logout: {url: '/', method: 'post'},
+          user: {url: '/user', method: 'get'}
         }
       }
     },
-    redirect:{
+    redirect: {
       login: '/login',
       logout: '/',
       home: '/' // Редирект после успешной авторизации
     }
   },
 
-  axios:{
-     baseURL: process.env.BACKEND_PRIVATE_URL + process.env.REST_API_PATH,
-     browserBaseURL: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
-     credentials: true,
-     proxy: true
+  axios: {
+    baseURL: process.env.BACKEND_PRIVATE_URL + process.env.REST_API_PATH,
+    browserBaseURL: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
+    credentials: true,
+    proxy: true
   },
   proxy: {
     '/api/v1/': process.env.BACKEND_PRIVATE_URL,
@@ -140,15 +145,26 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    extend(config, {}) {
+      config.node = {
+        fs: 'empty'
+      }
+    }
   },
   server: {
     host: process.env.NUXT_HOST,
     port: process.env.NUXT_PORT,
   },
   env: {
-    baseUrl:  process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
+    baseUrl: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
     backendUrl: process.env.BACKEND_PRIVATE_URL + process.env.REST_API_PATH
   },
+  izitoast:{
+    position: 'topRight',
+    transitionIn: 'bounceInLeft',
+    transitionOut: 'fadeOutRight',
+
+  }
   // router:{
   //   middleware: 'profile'
   // }

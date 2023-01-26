@@ -1,11 +1,13 @@
 <?php
 
 
+use App\Events\TestTwo;
 use App\Http\Controllers\Api\V1\FrontController;
 use App\Http\Controllers\Api\V1\IndexController;
 use App\Http\Controllers\Api\V1\profile\ArticleController;
 use App\Http\Controllers\Api\V1\UserController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Jobs\ProcessCreateArticle;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,6 +33,27 @@ use App\Http\Controllers\Api\V1\profile\CommentController;
 
 Route::group(['prefix'=>'v1'], function() {
 
+    Route::get('/redis', function(Request $request){
+            $redis = new Redis();
+            $redis->connect('127.0.0.1', 6379);
+            $redis->set('key', 188);
+            $val = $redis->get('key');
+            //dd($val);
+    });
+
+    Route::get('/event_one', function(Request $request){
+        //ProcessCreateArticle::dispatch();
+        $userId = $request->get('user') ?? 2;
+        $userObj = User::find($userId);
+        ProcessCreateArticle::dispatch($userObj);
+
+    });
+
+    Route::get('/event_two', function(Request $request){
+        $userId = $request->get('user') ?? 2;
+        $userObj = User::find($userId);
+        TestTwo::dispatch($userObj->toArray());
+    });
 
     Route::get('/articles', [ArticleController::class, 'index'])->name('profile-articles2');
 

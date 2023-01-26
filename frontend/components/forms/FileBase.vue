@@ -2,12 +2,12 @@
 
   <div class="form-cell element-upload" :class="renderClasses()">
 
-    <transition-group ref="container" tag="div" class="element-upload__previews" name="slide" v-show="renderData">
+    <transition-group ref="container" tag="div" class="element-upload__previews" name="fade" v-show="renderData">
       <div v-for="(file, key) in Object.entries(renderData)"
            ref="previews"
            @click="selectItem(file[0], key)"
            class="element-upload__preview js_element"
-           :key="file[0]"
+           :key="file[1].name"
            :data-index="key"
            draggable="true"
       >
@@ -17,6 +17,7 @@
         <span class="element-upload__selected">Главный</span>
       </div>
     </transition-group>
+
     <div class="element-upload__desc" v-html="label"></div>
     <button class="btn-middle btn-main element-upload__button  wide" @click.prevent="openDialog">
       <svg-icon class="element-upload__load" name="icon-plus"/>
@@ -393,4 +394,5 @@ svg.element-upload__load {
   padding: 2px 0;
   color: #fff;
 }
+
 </style>

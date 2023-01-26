@@ -153,7 +153,7 @@ export default class BaseValidator {
   }
 
   ruleEnAlphaDashValidator(val) {
-    return (/^[0-9A-Z_-]*$/i).test(val);
+    return (/^[0-9A-Z_@.-]*$/i).test(val);
   }
 
   ruleRequire(val) {
