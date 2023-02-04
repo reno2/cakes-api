@@ -1,6 +1,6 @@
 export default function ({redirect, store, req }) {
-  const isAuth = !!store.state.auth.user
-
+  const isAuth = store.state.auth.user && store.state.auth.user.email_verified_at
+  console.log(isAuth)
   if(!isAuth){
     redirect('/login')
   }

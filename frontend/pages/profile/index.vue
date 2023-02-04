@@ -10,8 +10,8 @@
 import Echo from "laravel-echo"
 import socketio from 'socket.io';
 export default {
+  middleware: 'verified',
   layout: 'profile',
-  middleware: 'profile',
   data() {
     return {
       user: null

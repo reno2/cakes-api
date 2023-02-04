@@ -8,6 +8,8 @@
 </template>
 <script>
 import error404 from '~/components/errors/404.vue';
+import error403 from '~/components/errors/403.vue';
+import error429 from '~/components/errors/429.vue';
 import error500 from '~/components/errors/500.vue';
 export default {
   name: 'nuxt-error',
@@ -20,8 +22,16 @@ export default {
   },
   computed: {
     errorPage() {
+     // console.log(this.error)
+
       if (this.error.statusCode === 404) {
         return error404;
+      }
+      if (this.error.statusCode === 429) {
+        return error429;
+      }
+      if (this.error.statusCode === 403) {
+        return error403;
       }
       // catch everything else
       return error500;

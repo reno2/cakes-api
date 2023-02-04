@@ -25,8 +25,9 @@ export default ({$axios, store, redirect, $cookies, error: nuxtError, app}, inje
 
   api.onResponse((response) => {
     if (response.status === 404) {
-      console.log('Oh no it returned a 404')
+     // redirect()
     }
+    console.log(response.status)
   })
 
   // Here is the magic, onRequest is an interceptor, so every request made will go trough this, and then we try to access app.$auth inside it, it is defined

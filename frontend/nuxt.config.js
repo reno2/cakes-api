@@ -51,10 +51,15 @@ export default {
       src: '~/plugins/laravel-echo',
       ssr: false
     },
+    {
+      src: '~/plugins/routes.js',
+      ssr: true
+    },
+    {src: '~/plugins/error-handler.js'},
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
-  components: true,
+  components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
@@ -159,7 +164,7 @@ export default {
     baseUrl: process.env.BACKEND_PUBLIC_URL + process.env.REST_API_PATH,
     backendUrl: process.env.BACKEND_PRIVATE_URL + process.env.REST_API_PATH
   },
-  izitoast:{
+  izitoast: {
     position: 'topRight',
     transitionIn: 'bounceInLeft',
     transitionOut: 'fadeOutRight',
